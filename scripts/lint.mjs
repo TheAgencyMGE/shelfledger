@@ -72,6 +72,9 @@ const LINKABLE_HOSTS = [
   'funko.com',
   'mezcotoyz.com',
   'tamashiiweb.com',
+  'entertainmentearth.com',
+  'bigbadtoystore.com',
+  'jsonfeed.org',
   'schema.org',
   'opensource.org',
   'www.w3.org',
@@ -159,7 +162,7 @@ function safeHost(url) {
 /* ------------------------------------------------------------ data files */
 
 async function checkData() {
-  for (const name of ['catalog.json', 'releases.json']) {
+  for (const name of ['releases.json']) {
     const file = path.join(ROOT, 'data', name);
     if (!existsSync(file)) {
       notes.push(`data/${name} not present (skipped)`);
