@@ -1,16 +1,17 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-09-08T18:44:17.312Z",
+  "generatedAt": "2026-09-08T22:18:25.086Z",
   "sources": [
     {
       "id": "entertainment-earth",
       "label": "Entertainment Earth",
       "kind": "retailer",
       "homepage": "https://www.entertainmentearth.com/",
-      "url": "https://www.entertainmentearth.com/s/newly-added",
-      "ok": true,
-      "listings": 633,
-      "withListingDate": 220,
+      "url": "https://www.entertainmentearth.com/",
+      "ok": false,
+      "listings": 0,
+      "withListingDate": 0,
+      "error": "HTTP 403 for https://www.entertainmentearth.com/newly-added",
       "lastSuccess": "2026-09-08T18:44:17.312Z",
       "bootstrap": false
     },
@@ -19,10 +20,11 @@
       "label": "BigBadToyStore",
       "kind": "retailer",
       "homepage": "https://www.bigbadtoystore.com/",
-      "url": "https://www.bigbadtoystore.com/Search",
-      "ok": true,
-      "listings": 20,
+      "url": "https://www.bigbadtoystore.com/",
+      "ok": false,
+      "listings": 0,
       "withListingDate": 0,
+      "error": "HTTP 403 for https://www.bigbadtoystore.com/Search",
       "lastSuccess": "2026-09-08T18:44:17.312Z",
       "bootstrap": false
     },
@@ -35,7 +37,7 @@
       "ok": true,
       "listings": 96,
       "withListingDate": 0,
-      "lastSuccess": "2026-09-08T18:44:17.312Z",
+      "lastSuccess": "2026-09-08T22:18:25.086Z",
       "bootstrap": false
     },
     {
@@ -47,7 +49,7 @@
       "ok": true,
       "listings": 60,
       "withListingDate": 0,
-      "lastSuccess": "2026-09-08T18:44:17.312Z",
+      "lastSuccess": "2026-09-08T22:18:25.086Z",
       "bootstrap": false
     },
     {
@@ -59,7 +61,7 @@
       "ok": true,
       "listings": 90,
       "withListingDate": 0,
-      "lastSuccess": "2026-09-08T18:44:17.312Z",
+      "lastSuccess": "2026-09-08T22:18:25.086Z",
       "bootstrap": false
     }
   ],
@@ -6987,7 +6989,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -9147,7 +9149,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -9195,7 +9197,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -9819,7 +9821,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -14427,7 +14429,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -14859,7 +14861,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -14907,7 +14909,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -15243,7 +15245,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -17787,7 +17789,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -19323,7 +19325,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -19371,7 +19373,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -20043,7 +20045,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -20379,7 +20381,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -20955,7 +20957,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -21051,7 +21053,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -21243,7 +21245,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -21339,7 +21341,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -25035,7 +25037,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -25083,7 +25085,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -25851,7 +25853,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -25899,7 +25901,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -26715,7 +26717,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -26763,7 +26765,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27339,7 +27341,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27435,7 +27437,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27483,7 +27485,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27531,7 +27533,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27579,7 +27581,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27685,16 +27687,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Twilight",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93197",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-19",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-19",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -27703,7 +27705,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -27717,17 +27718,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/the-twilight-saga-alice-cullen-funko-pop-vinyl-figure-2132/fu93197",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-19",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-alice-cullen-baseball-uniform/93197.html",
@@ -28081,16 +28071,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Twilight",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93198",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-19",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-19",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -28099,7 +28089,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -28113,17 +28102,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/the-twilight-saga-bella-swan-funko-pop-vinyl-figure-2129/fu93198",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-19",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-bella-swan/93198.html",
@@ -28141,16 +28119,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Street Fighter",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "94865",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-09-04",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-09-04",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "in-stock",
       "price": 14.99,
       "currency": "USD",
@@ -28159,7 +28137,6 @@
       "isReissue": false,
       "onNewReleasesPage": true,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -28173,17 +28150,6 @@
           "availability": "in-stock",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/street-fighter-movie-2026-blanka-funko-pop-vinyl-figure-2099/fu94865",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-09-04",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-blanka-2026/94865.html",
@@ -28537,16 +28503,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Twilight",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93199",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-19",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-19",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -28555,7 +28521,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -28569,17 +28534,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/the-twilight-saga-edward-cullen-funko-pop-vinyl-figure-2130/fu93199",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-19",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-edward-cullen/93199.html",
@@ -28645,16 +28599,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Doctor Who",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93135",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-28",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-28",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -28663,7 +28617,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -28677,17 +28630,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/doctor-who-eleventh-doctor-funko-pop-vinyl-figure-1966-specialty/fu93135",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-28",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-eleventh-doctor/93135.html",
@@ -28801,16 +28743,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Doctor Who",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93136",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-28",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-28",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -28819,7 +28761,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -28833,17 +28774,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/doctor-who-fifteenth-doctor-funko-pop-vinyl-figure-1967-specialty/fu93136",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-28",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-fifteenth-doctor/93136.html",
@@ -29005,16 +28935,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Twilight",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93200",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-19",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-19",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -29023,7 +28953,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -29037,17 +28966,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/the-twilight-saga-jacob-black-pop-sayings-funko-pop-vinyl-figure-2131/fu93200",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-19",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-jacob-black-where-the-hell-have-you-been/93200.html",
@@ -29641,16 +29559,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Twilight",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93384",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-19",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-19",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 34.99,
       "currency": "USD",
@@ -29659,7 +29577,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -29673,17 +29590,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/the-twilight-saga-edward-and-bella-funko-pop-moment-2133/fu93384",
-          "price": 34.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-19",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-moment-edward-bella/93384.html",
@@ -29989,16 +29895,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Doctor Who",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93137",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-28",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-28",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -30007,7 +29913,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -30021,17 +29926,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/doctor-who-ninth-doctor-funko-pop-vinyl-figure-1963-specialty/fu93137",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-28",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-ninth-doctor/93137.html",
@@ -30337,16 +30231,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Doctor Who",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93133",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-28",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-28",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 29.99,
       "currency": "USD",
@@ -30355,7 +30249,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -30369,17 +30262,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/doctor-who-tardis-with-tenth-doctor-deluxe-funko-pop-ride-318-specialty/fu93133",
-          "price": 29.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-28",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-rides-deluxe-tardis-with-tenth-doctor/93133.html",
@@ -30589,16 +30471,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Doctor Who",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "94733",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-28",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-28",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -30607,7 +30489,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -30621,17 +30502,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/doctor-who-river-song-funko-pop-vinyl-figure-1964/fu94733",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-28",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-river-song/94733.html",
@@ -30793,7 +30663,7 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Death Note",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "95202",
       "releaseDate": null,
@@ -30811,7 +30681,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -30823,17 +30692,6 @@
           "price": 14.99,
           "currency": "USD",
           "availability": "in-stock",
-          "listedDate": null,
-          "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/death-note-ryuk-glowinthedark-funko-pop-vinyl-figure-2382-entertainment-earth-exclusive/fur95202ee",
-          "price": 16.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
           "listedDate": null,
           "listingKind": null
         }
@@ -31285,16 +31143,16 @@
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
-      "license": "Doctor Who",
+      "license": null,
       "category": "vinyl-figure",
       "sku": "93134",
       "releaseDate": null,
       "releaseWindow": null,
-      "preorderDate": "2026-08-28",
+      "preorderDate": null,
       "arrivalDate": null,
-      "announcedDate": "2026-08-28",
-      "announcedBy": "entertainment-earth",
-      "announcementKind": "new-preorder",
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
       "availability": "pre-order",
       "price": 14.99,
       "currency": "USD",
@@ -31303,7 +31161,6 @@
       "isReissue": false,
       "onNewReleasesPage": false,
       "sourceIds": [
-        "entertainment-earth",
         "funko"
       ],
       "offers": [
@@ -31317,17 +31174,6 @@
           "availability": "pre-order",
           "listedDate": null,
           "listingKind": null
-        },
-        {
-          "sourceId": "entertainment-earth",
-          "seller": "Entertainment Earth",
-          "kind": "retailer",
-          "url": "https://www.entertainmentearth.com/product/doctor-who-tenth-doctor-funko-pop-vinyl-figure-1965-specialty/fu93134",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "out-of-stock",
-          "listedDate": "2026-08-28",
-          "listingKind": "new-preorder"
         }
       ],
       "url": "https://funko.com/pop-tenth-doctor/93134.html",
@@ -32535,7 +32381,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -32583,7 +32429,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -32631,7 +32477,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -33879,7 +33725,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -34071,7 +33917,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -34119,7 +33965,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -34647,7 +34493,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -34743,7 +34589,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -36615,7 +36461,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -37191,7 +37037,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -37239,7 +37085,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -37575,7 +37421,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -37671,7 +37517,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -37719,7 +37565,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -37767,7 +37613,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -37815,7 +37661,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -40935,7 +40781,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -42183,7 +42029,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -42807,7 +42653,7 @@
       "lastSeen": "2026-09-08",
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     }
