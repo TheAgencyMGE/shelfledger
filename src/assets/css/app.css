@@ -1,0 +1,806 @@
+/*
+  ShelfLedger
+
+  Dark only. Deep aubergine, one amber accent, and the item number set in mono
+  as the thing your eye lands on first. Every card carries a colour spine on its
+  left edge for status, so the status never needs a word.
+
+  No webfonts. A font request to a third party is a request we cannot see.
+*/
+
+/* ---------------------------------------------------------------- tokens */
+
+:root {
+  color-scheme: dark;
+
+  --ink: #16141b;
+  --ink-raised: #1e1b26;
+  --ink-sunk: #110f16;
+  --edge: #2b2635;
+  --edge-soft: #241f2d;
+  --paper: #ede7f0;
+  --muted: #948ba5;
+  --muted-dim: #655e76;
+
+  --lamp: #ffb347;
+  --want: #6fd3c7;
+  --had: #7d7690;
+  --alert: #ff7a6b;
+
+  --font-ui: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, "Cascadia Mono", "SF Mono", "Segoe UI Mono", Menlo, Consolas, monospace;
+
+  --wrap: 72rem;
+  --radius: 3px;
+  --line: 1px solid var(--edge);
+}
+
+/* ---------------------------------------------------------------- base */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font: 400 0.9375rem/1.55 var(--font-ui);
+  -webkit-text-size-adjust: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1 0 auto;
+  padding-block: 2rem 4rem;
+}
+
+.wrap {
+  width: min(100% - 2rem, var(--wrap));
+  margin-inline: auto;
+}
+
+h1,
+h2,
+h3 {
+  margin: 0;
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  font-weight: 620;
+}
+h1 {
+  font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  letter-spacing: -0.035em;
+}
+h2 {
+  font-size: 1.25rem;
+}
+h3 {
+  font-size: 1.0625rem;
+}
+p {
+  margin: 0 0 1em;
+}
+
+a {
+  color: var(--paper);
+  text-decoration-color: color-mix(in srgb, var(--lamp) 55%, transparent);
+  text-underline-offset: 3px;
+}
+a:hover {
+  text-decoration-color: var(--lamp);
+}
+
+:focus-visible {
+  outline: 2px solid var(--lamp);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  background: var(--lamp);
+  color: #16141b;
+  padding: 0.6rem 1rem;
+  z-index: 60;
+  font-weight: 600;
+}
+.skip:focus {
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+/* The accession number: the signature element. */
+.accession {
+  font: 500 0.8125rem/1 var(--font-mono);
+  letter-spacing: 0.04em;
+  color: var(--lamp);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------------------------------------------------------------- header */
+
+.site-head {
+  border-bottom: var(--line);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, var(--ink) 88%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.head-inner {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  min-height: 3.25rem;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: var(--paper);
+}
+.wordmark-mark {
+  width: 20px;
+  height: 20px;
+  stroke: var(--lamp);
+  stroke-width: 1.25;
+  fill: color-mix(in srgb, var(--lamp) 22%, transparent);
+}
+.wordmark-mark path {
+  fill: none;
+  stroke: var(--edge);
+}
+.wordmark-text {
+  font-size: 1rem;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  color: var(--muted);
+}
+.wordmark-text b {
+  font-weight: 660;
+  color: var(--paper);
+}
+
+.site-nav {
+  margin-left: auto;
+}
+.site-nav ul {
+  display: flex;
+  gap: 0.1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.site-nav a {
+  display: block;
+  padding: 0.35rem 0.55rem;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+.site-nav a:hover {
+  color: var(--paper);
+}
+.site-nav a[aria-current="page"] {
+  color: var(--paper);
+  box-shadow: inset 0 -2px 0 var(--lamp);
+}
+
+@media (max-width: 44rem) {
+  .head-inner {
+    min-height: 0;
+    padding-block: 0.5rem;
+    row-gap: 0.25rem;
+    gap: 0.5rem;
+  }
+  .site-nav {
+    flex: 1 0 100%;
+    margin-left: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .site-nav::-webkit-scrollbar {
+    display: none;
+  }
+  .site-nav a {
+    padding: 0.3rem 0.5rem;
+    font-size: 0.8125rem;
+  }
+  main {
+    padding-block: 1.5rem 3rem;
+  }
+}
+
+/* ---------------------------------------------------------------- controls */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  border: var(--line);
+  background: var(--ink-raised);
+  color: var(--paper);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.85rem;
+  font: 550 0.875rem/1.2 var(--font-ui);
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color 0.14s ease, background 0.14s ease;
+}
+.btn:hover {
+  border-color: var(--muted-dim);
+}
+.btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+.btn-primary {
+  background: var(--lamp);
+  border-color: var(--lamp);
+  color: #17130c;
+  font-weight: 640;
+}
+.btn-primary:hover {
+  background: color-mix(in srgb, var(--lamp) 88%, #fff);
+}
+.btn-quiet {
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+  padding-inline: 0;
+}
+.btn-quiet:hover {
+  color: var(--paper);
+  border-color: transparent;
+}
+.btn-danger {
+  background: transparent;
+  border-color: transparent;
+  color: var(--muted);
+  padding-inline: 0;
+}
+.btn-danger:hover {
+  color: var(--alert);
+  border-color: transparent;
+}
+.btn-sm {
+  padding: 0.3rem 0.55rem;
+  font-size: 0.8125rem;
+}
+
+input,
+select,
+textarea {
+  font: 400 0.9375rem/1.4 var(--font-ui);
+  color: var(--paper);
+  background: var(--ink-sunk);
+  border: var(--line);
+  border-radius: var(--radius);
+  padding: 0.5rem 0.65rem;
+  width: 100%;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--lamp);
+  outline-offset: 1px;
+}
+input::placeholder {
+  color: var(--muted-dim);
+}
+
+/* Field labels only appear inside the add sheet, where they are needed. */
+.field {
+  margin-bottom: 0.85rem;
+}
+.field > label {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+.field-row {
+  display: grid;
+  gap: 0.7rem;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+.hint {
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin: 0.3rem 0 0;
+}
+.check {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.check input {
+  width: auto;
+}
+
+/* ---------------------------------------------------------------- page head */
+
+.page-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+.head-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.panel {
+  border: var(--line);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+.panel > :last-child {
+  margin-bottom: 0;
+}
+.panel h2 {
+  margin-bottom: 0.4rem;
+}
+
+/* One quiet line of counts, not a row of dashboard tiles. */
+.tally {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.25rem;
+  list-style: none;
+  margin: 0 0 1.25rem;
+  padding: 0;
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.tally li {
+  display: flex;
+  gap: 0.35rem;
+}
+.tally b {
+  font: 550 0.8125rem/1.55 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--paper);
+}
+.tally .t-have b {
+  color: var(--lamp);
+}
+.tally .t-want b {
+  color: var(--want);
+}
+
+/* ---------------------------------------------------------------- filters */
+
+.filters {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: minmax(11rem, 2fr) repeat(auto-fit, minmax(8rem, 1fr));
+  margin-bottom: 1rem;
+}
+.filters > * {
+  min-width: 0;
+}
+.seg {
+  display: flex;
+  border: var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.seg button {
+  flex: 1 1 0;
+  min-width: 0;
+  background: transparent;
+  border: 0;
+  border-right: var(--line);
+  color: var(--muted);
+  padding: 0.5rem 0.35rem;
+  font: 500 0.8125rem/1.2 var(--font-ui);
+  cursor: pointer;
+}
+.seg button:last-child {
+  border-right: 0;
+}
+.seg button[aria-pressed="true"] {
+  color: var(--paper);
+  box-shadow: inset 0 -2px 0 var(--lamp);
+}
+
+/* ---------------------------------------------------------------- the shelf */
+
+.shelf {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  background: var(--ink-raised);
+  border: var(--line);
+  border-left: 3px solid var(--edge);
+  border-radius: var(--radius);
+}
+.item[data-status="have"] {
+  border-left-color: var(--lamp);
+}
+.item[data-status="want"] {
+  border-left-color: var(--want);
+}
+.item[data-status="had"] {
+  border-left-color: var(--had);
+  opacity: 0.6;
+}
+
+/* The whole card is one control: it opens the sheet, where every action lives.
+   That keeps rows of buttons off the grid. */
+.item-hit {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  background: none;
+  border: 0;
+  border-radius: var(--radius);
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.item:hover {
+  border-color: var(--muted-dim);
+}
+.item:hover .item-hit {
+  background: color-mix(in srgb, var(--paper) 3%, transparent);
+}
+
+.item-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+.item-name {
+  font-size: 0.9375rem;
+  font-weight: 560;
+  letter-spacing: -0.01em;
+  overflow-wrap: anywhere;
+}
+.item-meta {
+  font-size: 0.8125rem;
+  color: var(--muted);
+}
+.item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.25rem;
+}
+.tag {
+  font: 500 0.6875rem/1 var(--font-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: var(--line);
+  border-radius: 2px;
+  padding: 0.22rem 0.36rem;
+}
+.tag-chase {
+  color: var(--lamp);
+  border-color: color-mix(in srgb, var(--lamp) 40%, transparent);
+}
+.qty {
+  font: 500 0.8125rem/1 var(--font-mono);
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------- empty */
+
+.empty {
+  border: 1px dashed var(--edge);
+  border-radius: var(--radius);
+  padding: clamp(1.75rem, 6vw, 3.5rem) 1.5rem;
+  text-align: center;
+}
+.empty h2 {
+  font-weight: 560;
+  margin-bottom: 0.35rem;
+}
+.empty p {
+  color: var(--muted);
+  max-width: 38ch;
+  margin-inline: auto;
+}
+.empty-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.25rem;
+}
+
+/* ---------------------------------------------------------------- dialogs */
+
+dialog {
+  border: var(--line);
+  background: var(--ink-raised);
+  color: var(--paper);
+  border-radius: var(--radius);
+  padding: 0;
+  width: min(100% - 1.5rem, 32rem);
+}
+dialog::backdrop {
+  background: rgba(10, 8, 14, 0.7);
+}
+.dialog-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: var(--line);
+}
+.dialog-head h2 {
+  font-size: 1.0625rem;
+}
+.dialog-body {
+  padding: 1rem;
+  max-height: min(66vh, 34rem);
+  overflow-y: auto;
+}
+.dialog-foot {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  padding: 0.85rem 1rem;
+  border-top: var(--line);
+}
+
+.results {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  border: var(--line);
+  border-radius: var(--radius);
+  max-height: 15rem;
+  overflow-y: auto;
+}
+.results:empty {
+  display: none;
+}
+.results li + li {
+  border-top: 1px solid var(--edge-soft);
+}
+.result {
+  display: flex;
+  width: 100%;
+  gap: 0.6rem;
+  align-items: baseline;
+  background: transparent;
+  border: 0;
+  color: inherit;
+  text-align: left;
+  padding: 0.5rem 0.65rem;
+  cursor: pointer;
+  font: inherit;
+}
+.result:hover,
+.result:focus-visible {
+  background: var(--edge-soft);
+}
+.result-name {
+  flex: 1;
+}
+.result-lic {
+  font-size: 0.75rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+/* ---------------------------------------------------------------- scanner */
+
+.scanner {
+  position: relative;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+.scanner video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.reticle {
+  position: absolute;
+  inset: 18% 10%;
+  border: 2px solid color-mix(in srgb, var(--lamp) 70%, transparent);
+  border-radius: var(--radius);
+  box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- radar */
+
+.radar-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.release {
+  display: grid;
+  grid-template-columns: 4.5rem 1fr auto;
+  gap: 0.15rem 1rem;
+  align-items: baseline;
+  padding: 0.7rem 0;
+  border-bottom: var(--line);
+  border-left: 3px solid transparent;
+}
+.release[data-match="true"] {
+  border-left-color: var(--want);
+  padding-left: 0.75rem;
+}
+.release-date {
+  font: 500 0.8125rem/1.3 var(--font-mono);
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+.release-name {
+  font-size: 0.9375rem;
+  font-weight: 550;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+.release-sub {
+  grid-column: 2;
+  font-size: 0.8125rem;
+  color: var(--muted);
+  margin: 0;
+}
+.release-side {
+  text-align: right;
+  font: 500 0.8125rem/1.4 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+.release-side .limited {
+  color: var(--lamp);
+  display: block;
+}
+
+@media (max-width: 34rem) {
+  .release {
+    grid-template-columns: 4rem 1fr;
+  }
+  .release-side {
+    grid-column: 2;
+    text-align: left;
+  }
+}
+
+/* ---------------------------------------------------------------- prose */
+
+.prose {
+  max-width: 60ch;
+}
+.prose h2 {
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+.prose ul {
+  padding-left: 1.1rem;
+  margin: 0 0 1em;
+}
+.prose li {
+  margin-bottom: 0.3em;
+}
+.prose code {
+  font: 500 0.875em/1 var(--font-mono);
+  color: var(--lamp);
+}
+
+/* ---------------------------------------------------------------- footer */
+
+.site-foot {
+  border-top: var(--line);
+  padding-block: 1.5rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--muted-dim);
+}
+.foot-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+.foot-links a {
+  color: var(--muted);
+  text-decoration: none;
+}
+.foot-links a:hover {
+  color: var(--paper);
+  text-decoration: underline;
+}
+.foot-legal {
+  margin: 0;
+  max-width: 70ch;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------- toasts */
+
+.toast-rail {
+  position: fixed;
+  left: 50%;
+  bottom: 1.25rem;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  z-index: 80;
+  width: min(100% - 2rem, 24rem);
+  pointer-events: none;
+}
+.toast {
+  background: var(--ink-raised);
+  border: var(--line);
+  border-left: 3px solid var(--lamp);
+  border-radius: var(--radius);
+  padding: 0.55rem 0.8rem;
+  font-size: 0.875rem;
+  margin: 0;
+}
+.toast[data-kind="error"] {
+  border-left-color: var(--alert);
+}
+
+/* ---------------------------------------------------------------- utility */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+[hidden] {
+  display: none !important;
+}
+.muted {
+  color: var(--muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.001ms !important;
+  }
+}

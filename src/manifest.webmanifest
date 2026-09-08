@@ -1,0 +1,45 @@
+{
+  "name": "ShelfLedger",
+  "short_name": "ShelfLedger",
+  "description": "Track your collectibles without an account. Everything stays in your browser.",
+  "id": "{{base}}",
+  "start_url": "{{base}}",
+  "scope": "{{base}}",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#16141B",
+  "theme_color": "#16141B",
+  "categories": ["utilities", "productivity", "lifestyle"],
+  "icons": [
+    {
+      "src": "{{base}}assets/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "{{base}}assets/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "{{base}}assets/icons/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Wishlist",
+      "short_name": "Wishlist",
+      "url": "{{base}}wishlist/"
+    },
+    {
+      "name": "Release radar",
+      "short_name": "Radar",
+      "url": "{{base}}radar/"
+    }
+  ]
+}
