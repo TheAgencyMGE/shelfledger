@@ -18,6 +18,7 @@ export const meta = {
   manufacturer: 'Funko',
   homepage: 'https://funko.com/',
   retailer: 'Funko Shop',
+  kind: 'manufacturer',
   category: 'vinyl-figure',
 };
 
@@ -118,6 +119,7 @@ export function toRelease(product, { channel, badges, today }) {
   return {
     id: sku ? `funko-${sku}` : null,
     sourceId: meta.id,
+    sourceKind: 'manufacturer',
     manufacturer: meta.manufacturer,
     line: lineFromName(name),
     category: meta.category,
@@ -131,7 +133,10 @@ export function toRelease(product, { channel, badges, today }) {
     availability: availabilityOf(offer, channel),
     limitedRunSize: badge?.limitedRunSize ?? null,
     exclusive: channel === 'exclusive' ? 'Funko Shop exclusive' : null,
-    isNewRelease: channel === 'new-release',
+    onNewReleasesPage: channel === 'new-release',
+    listedDate: null,
+    listingKind: null,
+    arrivalDate: null,
     isLimitedDrop: channel === 'limited-drop',
     retailer: meta.retailer,
     url: typeof product['@id'] === 'string' ? product['@id'] : (offer?.url ?? null),
@@ -147,7 +152,7 @@ function merge(existing, incoming) {
     limitedRunSize: incoming.limitedRunSize ?? existing.limitedRunSize,
     price: incoming.price ?? existing.price,
     exclusive: incoming.exclusive ?? existing.exclusive,
-    isNewRelease: existing.isNewRelease || incoming.isNewRelease,
+    onNewReleasesPage: existing.onNewReleasesPage || incoming.onNewReleasesPage,
     isLimitedDrop: existing.isLimitedDrop || incoming.isLimitedDrop,
   };
 }

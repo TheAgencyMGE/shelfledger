@@ -19,6 +19,7 @@ export const meta = {
   manufacturer: 'Mezco',
   homepage: 'https://www.mezcotoyz.com/',
   retailer: 'Mezco Toyz',
+  kind: 'manufacturer',
   category: 'action-figure',
 };
 
@@ -106,6 +107,7 @@ export function parseListing(html) {
     releases.push({
       id: idFromUrl(url),
       sourceId: meta.id,
+      sourceKind: 'manufacturer',
       manufacturer: meta.manufacturer,
       line,
       category: meta.category,
@@ -120,7 +122,10 @@ export function parseListing(html) {
       availability: availabilityOf(avail),
       limitedRunSize: null,
       exclusive: null,
-      isNewRelease: /new-arrival-badge/.test(tile),
+      onNewReleasesPage: /new-arrival-badge/.test(tile),
+      listedDate: null,
+      listingKind: null,
+      arrivalDate: null,
       isLimitedDrop: false,
       retailer: meta.retailer,
       url: url.startsWith('http') ? url : `${ORIGIN}${url}`,

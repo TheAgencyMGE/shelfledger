@@ -21,6 +21,7 @@ export const meta = {
   manufacturer: 'Bandai Spirits',
   homepage: 'https://tamashiiweb.com/',
   retailer: 'Tamashii Nations',
+  kind: 'manufacturer',
   category: 'anime-figure',
 };
 
@@ -71,6 +72,7 @@ export function parseListing(html) {
     releases.push({
       id: `tamashii-${id}`,
       sourceId: meta.id,
+      sourceKind: 'manufacturer',
       manufacturer: meta.manufacturer,
       line,
       category: categoryForLine(line),
@@ -85,7 +87,10 @@ export function parseListing(html) {
       limitedRunSize: null,
       // Tamashii marks its own web shop exclusives in the channel label.
       exclusive: /魂ウェブ商店|プレミアムバンダイ/.test(channel) ? channel : null,
-      isNewRelease: false,
+      onNewReleasesPage: false,
+      listedDate: null,
+      listingKind: null,
+      arrivalDate: null,
       isLimitedDrop: false,
       isReissue: /_icon-resale/.test(tile),
       retailer: meta.retailer,
