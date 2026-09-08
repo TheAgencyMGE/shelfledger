@@ -1,0 +1,37 @@
+<!--@
+{
+  "route": "/radar/",
+  "nav": "radar",
+  "title": "Release radar, upcoming drops matched to your wishlist",
+  "description": "A daily-updated calendar of new and upcoming collectible releases, cross-referenced against your wishlist inside your own browser. Export the dates as a calendar file.",
+  "scripts": ["pages/radar.js"]
+}
+@-->
+    <div class="page-head">
+      <h1>Release radar</h1>
+      <div class="head-actions">
+        <button type="button" class="btn btn-primary" data-ics disabled>Download .ics</button>
+      </div>
+    </div>
+
+    <div data-radar-meta></div>
+
+    <div class="filters" style="grid-template-columns: repeat(auto-fit, minmax(14rem, auto))">
+      <label class="check">
+        <input type="checkbox" data-only-matches />
+        Only my wishlist
+      </label>
+      <label class="check">
+        <input type="checkbox" data-include-past />
+        Include past dates
+      </label>
+    </div>
+
+    <section data-radar-list aria-label="Upcoming releases">
+      <p class="muted">Loading.</p>
+    </section>
+
+    <p class="hint" style="margin-top: 2rem">
+      Matching happens in this browser. The release file is public and the same for everyone, so
+      nothing you want is sent anywhere. <a href="../about/">How it works</a>
+    </p>
