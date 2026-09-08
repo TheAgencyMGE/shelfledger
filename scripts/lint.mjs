@@ -70,6 +70,8 @@ const LINKABLE_HOSTS = [
   SITE_HOST,
   'github.com',
   'funko.com',
+  'mezcotoyz.com',
+  'tamashiiweb.com',
   'schema.org',
   'opensource.org',
   'www.w3.org',

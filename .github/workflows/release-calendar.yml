@@ -1,7 +1,10 @@
-name: Release calendar
+name: Release feed
 
-# Rebuilds data/releases.json from public catalogue pages once a day and commits
+# Rebuilds data/releases.json from every source adapter once a day and commits
 # it only when something actually changed, so the history stays readable.
+#
+# A single source failing does not fail the run: its rows are carried forward
+# from the previous run and the site reports it as stale.
 #
 # Once a day is deliberate and should stay that way, see the note at the top of
 # scripts/scrape-releases.mjs.
@@ -31,17 +34,17 @@ jobs:
         with:
           node-version: '22'
 
-      - name: Fetch the release calendar
+      - name: Fetch the release feed
         run: npm run scrape
 
       - name: Check the result is still valid
         run: npm run lint
 
-      - name: Commit if the calendar changed
+      - name: Commit if the feed changed
         id: commit
         run: |
           if git diff --quiet -- data/releases.json; then
-            echo "No change to the release calendar."
+            echo "No change to the release feed."
             echo "changed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
@@ -55,7 +58,7 @@ jobs:
 
       # A push made with GITHUB_TOKEN does not start other workflows, so the
       # deploy has to be asked for explicitly.
-      - name: Publish the updated calendar
+      - name: Publish the updated feed
         if: steps.commit.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

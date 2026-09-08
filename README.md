@@ -1,115 +1,134 @@
 # ShelfLedger
 
 [![Build and deploy](https://github.com/TheAgencyMGE/shelfledger/actions/workflows/deploy.yml/badge.svg)](https://github.com/TheAgencyMGE/shelfledger/actions/workflows/deploy.yml)
-[![Release calendar](https://github.com/TheAgencyMGE/shelfledger/actions/workflows/release-calendar.yml/badge.svg)](https://github.com/TheAgencyMGE/shelfledger/actions/workflows/release-calendar.yml)
+[![Release feed](https://github.com/TheAgencyMGE/shelfledger/actions/workflows/release-calendar.yml/badge.svg)](https://github.com/TheAgencyMGE/shelfledger/actions/workflows/release-calendar.yml)
 [![MIT licence](https://img.shields.io/badge/licence-MIT-blue)](LICENSE)
 
-A collection tracker for Funko Pops, action figures, and whatever else is on
-your shelf. No account, no cloud, no ads. What you log stays in your browser.
+Open-source release radar for action figures, Funko Pops, anime figures and
+collectibles. Track new announcements, preorders, exclusives and upcoming drops
+without an account.
 
-**[Open it →](https://theagencymge.github.io/shelfledger/)**
+**[Open the radar](https://theagencymge.github.io/shelfledger/)**
 
 ## Why this exists
 
-Every Funko tracker I tried wanted something. One wanted an email address before
-it would let me add a single figure. One capped the free list at 100 items and
-then asked for a subscription, for a list. A couple were fine right up until I
-read what they did with the data, which was upload my entire collection to a
-server and keep it there.
+Finding out what is coming out is weirdly hard. Every manufacturer announces on
+its own site on its own schedule, half the news lives in Instagram posts, and
+the sites that aggregate it want an email address before they will show you a
+list. I kept missing preorder windows on figures I actually wanted.
 
-It's a list of toys. It should not require an account, and it should not live on
-someone else's computer.
+So this reads the manufacturers' own public listing pages once a day, puts them
+in one feed, and flags anything that lines up with a wishlist kept in your own
+browser. There is no account, because there is nothing to log into. Your
+wishlist never goes into a request.
 
-So this one doesn't have a server for your collection to go to. Not "we promise
-not to look", there's no database, no login, no endpoint that accepts your
-data. Your items go into IndexedDB, which is a database built into your own
-browser, and they sit there. The whole app is static files on GitHub Pages.
+## What it actually covers
 
-The obvious cost: if you clear your browser data without exporting first, it's
-gone, and nobody can get it back for you. That's the trade. Export is one button
-and one file, and it's the first thing on the Backup page rather than buried in
-settings.
+This is the honest version. Nothing in the feed is invented, and nothing is
+listed as supported because it would look good in a README.
 
-## What it does
+**Working now:**
 
-- Track what you **have**, **want**, and **had**, with multiple copies, boxed
-  or loose, chase, and exclusives.
-- **Scan barcodes** with your phone camera in the shop. Decoding happens on the
-  device; no image and no number gets uploaded.
-- **Search and filter** by licence, series, status, or free text.
-- **Wishlist**, which is just the "want" items on their own page.
-- **Release radar**, a calendar of new and upcoming drops, refreshed daily,
-  with anything matching your wishlist flagged. Includes limited-run sizes,
-  because "limited to 1,200 pieces" changes how hard you chase something.
-- **Calendar reminders**, export the dates you care about as an `.ics` file and
-  your own calendar app handles the reminders.
-- **Export and import** your whole collection as one readable JSON file.
-- Works **offline** and installs as an app on your phone.
+| Source | Lines | How it is read |
+| ------ | ----- | -------------- |
+| Funko | Pop!, Bitty Pop!, Pocket Pop!, Vinyl Soda | Five category pages that publish schema.org product data |
+| Mezco Toyz | One:12 Collective, 5 Points | Three server-rendered category pages |
+| Tamashii Nations | S.H.Figuarts, Figuarts ZERO, Robot Damashii, Chogokin and others | The front page listing, with dates in `datetime` attributes |
 
-An open catalogue of about 19,800 items ships with it, seeded from public
-listings, with real item numbers. It is not complete, see
-[the catalogue section](#the-catalogue-is-open-and-incomplete).
+Nine requests a day in total, none of them to an individual product page.
+
+**Asked for a lot, not working, with the actual reason:**
+
+- **Hasbro Pulse** (Marvel Legends, Black Series, G.I. Joe Classified,
+  Transformers). The storefront is a client-rendered single page app, so the
+  listings do not exist in the HTML that gets served. What sits behind it is a
+  private commerce API, not a public feed.
+- **NECA.** `necaonline.com/robots.txt` disallows `/products/` and
+  `/productlist/` for every crawler, and that is where the listings are.
+- **McFarlane Toys.** The site is a marketing showcase. No server-rendered
+  product data, no prices, and the sitemap it advertises returns a 404.
+- **Sideshow and Hot Toys.** Every request gets redirected into a virtual
+  waiting room queue. Getting around that would mean evading a system built to
+  control traffic.
+- **MAFEX and Medicom.** The store publishes no product sitemap and its product
+  endpoint returns nothing.
+
+Each of these has an entry in
+[`scripts/sources/index.mjs`](scripts/sources/index.mjs) with its reason and
+what would have to change. The
+[about page](https://theagencymge.github.io/shelfledger/about/) builds both
+lists from the live data, so it cannot drift from what the scraper really does.
+
+## The radar
+
+Releases are sorted into the buckets you actually think in, and one release can
+sit in several at once: just announced, preorders, releasing soon, available
+now, new releases, and exclusives or limited runs.
+
+On top of that, filter by manufacturer, line and type, search across everything,
+or narrow to your wishlist. Each row shows the release date or shipping window,
+price, availability, run size where the source states one, and a link to the
+listing it came from. Anything discovered in the latest run is marked, so new
+announcements stand out without you hunting for them.
+
+Dated rows export as an `.ics` file, so reminders happen in your own calendar
+app instead of needing push notifications.
+
+## Tracking your own shelf
+
+Secondary to the radar now, but all still here. Log what you **have**, **want**
+and **had**, with copies, condition, chase and exclusives. Scan barcodes with
+your phone camera, decoded on the device. Search and filter. Export and import
+everything as one JSON file.
+
+The wishlist is what makes the radar personal, so it earns its place.
 
 ## Your data never leaves your browser
 
-This is the whole point, so here's exactly what happens.
-
-Your items and settings go into IndexedDB, a database built into your browser,
-on your device. Nothing else. No cookies, no localStorage, no fingerprint.
+Your collection and wishlist go into IndexedDB, in your browser, on your device.
+Nothing else. No cookies, no localStorage, no accounts.
 
 Over the network the app asks for three things, all from the same domain as the
-page: the pages and scripts themselves; `data/catalog/*.json`, the shared item
-catalogue, fetched the first time you search; and `data/releases.json`, the
-release calendar. Those are the same files for everyone who loads the site. No
-query strings, no identifiers, no request bodies, nothing that says who asked.
+page: the pages and scripts, `data/releases.json`, and `data/catalog/*.json`
+when you search. Those are the same files for everyone who loads the site. No
+query strings, no identifiers, no request bodies.
 
-What's absent matters as much. No analytics, and I mean none, not Google's, and
-not the privacy-branded ones that promise they're the good kind. No error
-reporting. No fonts from a CDN, which is incidentally why it loads fast. No
-embeds, no iframes, no third-party scripts at all. If you want to know whether
-anyone uses this, the stars and the issue tracker are the only telemetry there
-is.
+No analytics, and I mean none, not Google's and not the privacy-branded ones. No
+error reporting. No fonts from a CDN. No embeds, no iframes, no third-party
+scripts at all.
 
-The release radar is the one feature where you'd expect a server to be involved,
-so it's worth spelling out. The release file is public and identical for every
-visitor. Your browser downloads it and compares it against your local wishlist
-itself. The flags you see were worked out on your device, and nothing that
-produced them was sent anywhere.
+Wishlist matching is the one feature where you would expect a server. The feed
+is public and identical for every visitor; your browser downloads it and does
+the comparison itself. The flags you see were worked out on your device.
 
-None of this is something you have to take on faith. `npm run lint` fails the
-build if anything introduces a third-party script, an external stylesheet, a
-webfont, a known analytics snippet, or a `fetch()` to an absolute URL, and CI
-runs it against the source and again against the built output on every push. A
-promise in a README is worth less than a check that breaks the deploy.
+None of that is something you have to take on faith. `npm run lint` fails the
+build on a third-party script, an external stylesheet, a webfont, a known
+analytics snippet, or a `fetch()` to an absolute URL, and CI runs it against
+both the source and the built output on every push.
 
 ## Screenshots
 
-The collection. The stripe on each card is its status, and the number is the
-item number off the box.
+The radar. Stage tabs across the top, wishlist matches marked, a source link on
+every row.
 
-![The collection view, showing twelve figures as cards in a grid. Each card has
-its item number in orange monospace, the name, the licence, and a coloured
-stripe down the left edge marking whether it is owned, wanted, or previously
-owned.](docs/screenshots/collection.png)
+![The release radar, listing upcoming releases by date with manufacturer, line, price and availability. Stage tabs run across the top and two rows are marked as wishlist matches.](docs/screenshots/radar.png)
 
-The radar. Wishlist matches get a teal stripe. Run sizes come from the public
-drop calendar.
+Your own shelf. The stripe on each card is its status, the number is the item
+number off the box.
 
-![The release radar, listing upcoming drops by date with piece counts and
-prices. Two rows are highlighted in teal and tagged "on your wishlist".](docs/screenshots/radar.png)
+![The collection view, showing figures as cards in a grid, each with its item number, name, licence and a coloured status stripe.](docs/screenshots/collection.png)
 
-The wishlist on a phone, which is where you'll actually use it.
+On a phone, which is where you check a preorder window while standing in a shop.
 
-<img src="docs/screenshots/wishlist-mobile.png" alt="The wishlist on a narrow phone screen, showing two wanted figures as full-width cards." width="320">
+<img src="docs/screenshots/radar-mobile.png" alt="The radar on a narrow phone screen, with stage tabs scrolled horizontally and releases stacked." width="320">
 
-These are generated by `npm run screenshots`, which seeds a demo collection into
-a throwaway copy of the build. No demo data or seeding code ships in the app.
+Generated by `npm run screenshots`, which seeds a demo collection into a
+throwaway copy of the build. No demo data ships in the app.
 
-## Using it
+## Running it
 
 **Hosted:** <https://theagencymge.github.io/shelfledger/>. Nothing to sign up
-for. On a phone, use "Add to Home Screen" and it behaves like an app and works
-offline.
+for. On a phone, use "Add to Home Screen" and it works offline.
 
 **Locally:**
 
@@ -120,22 +139,22 @@ npm run build
 npm run serve
 ```
 
-Then open <http://localhost:8787/shelfledger/>. There's nothing to `npm install`
- the app ships no runtime dependencies and the build uses only Node's standard
-library. Node 20 or newer.
+Then open <http://localhost:8787/shelfledger/>. There is nothing to
+`npm install`. The app ships no runtime dependencies, and the build, tests and
+scrapers use only Node's standard library. Node 20 or newer.
 
-To serve it from the root of a domain instead of a subpath, build with
-`SITE_BASE=/`.
+Build with `SITE_BASE=/` to serve from the root of a domain instead of a
+subpath.
 
-## How the release radar works
+## How the feed is built
 
-A [scheduled workflow](.github/workflows/release-calendar.yml) runs once a day
-and reads five of Funko's own public catalogue pages: new releases, coming soon,
-pre-orders, exclusives, and the limited edition drop calendar. Those pages
-publish schema.org structured data in the HTML, so one request per page gets the
-name, item number, price, and stock state without touching a single product
-page. The drop calendar additionally prints the drop date and the run size on
-each tile, which is where "8 Sep, 1,200 pieces" comes from.
+A [scheduled workflow](.github/workflows/release-calendar.yml) runs at noon
+Pacific. Each source is an adapter in [`scripts/sources`](scripts/sources) that
+only ever reads listing pages. The orchestrator checks `robots.txt` per host,
+runs the adapters in turn, and keeps going when one breaks: a failed source
+keeps its entries from the previous run and is reported in the output, so the
+radar can say it is stale instead of silently losing rows. The run only refuses
+to write when every source fails.
 
 The job identifies itself honestly:
 
@@ -143,78 +162,67 @@ The job identifies itself honestly:
 ShelfLedgerBot/1.0 (+https://github.com/TheAgencyMGE/shelfledger; open-source collection tracker; contact via GitHub issues)
 ```
 
-It reads `robots.txt` first and obeys it, makes five requests spaced well apart,
-and runs at most once every 24 hours. If you maintain that site and want it to
+It reads `robots.txt` first and obeys it, spaces its requests out, and runs at
+most once every 24 hours. If you maintain one of these sites and want it to
 stop, open an issue and it will.
 
-The result is written to [`data/releases.json`](data/releases.json) and committed
-only when something actually changed, so the git history is a readable log of
-what got announced when. Dates and prices are whatever the source said at the
-time, and they do change.
+Results go to [`data/releases.json`](data/releases.json), committed only when
+something changed, so the history is a readable log of what got announced when.
+Prices and dates are whatever the source said at the time.
 
-Scraping is only as stable as someone else's markup. If the calendar goes stale,
-the likely cause is a renamed category path or a switch to client-side
-rendering; there's a maintenance note at the top of
+Scraping is only as stable as someone else's markup. A source reporting zero
+products usually means a renamed path or a switch to client-side rendering.
+There is a maintenance note at the top of
 [`scripts/scrape-releases.mjs`](scripts/scrape-releases.mjs).
 
-## The catalogue is open, and incomplete
+## Adding a manufacturer
 
-[`data/catalog.json`](data/catalog.json) is a plain, versioned file in this repo,
-one item per line so that adding a figure is a one-line diff. Around 19,800
-items with official item numbers, of which roughly 600 have had their names and
-licences confirmed against structured listings. The rest had names derived from
-product URLs and are marked `"verified": false`, usually right, occasionally
-missing a hyphen or an apostrophe.
+Write one file in `scripts/sources/`, export `meta` and `collect()`, and add it
+to the list in `index.mjs`. The rules an adapter follows:
 
-It's missing plenty, especially older releases, regional exclusives, and almost
-all barcodes. That last one is the biggest gap, since barcodes are what make
-scanning find something.
+- read listing pages only, never individual product pages;
+- prefer structured data the site already publishes over parsing prose;
+- return the shared release shape, so the radar never needs to know which source
+  a row came from;
+- fail loudly in the adapter rather than returning half a result.
 
-Two ways to help, and neither requires you to be a programmer:
+`test/sources.test.mjs` runs every adapter against fixed markup samples, so CI
+never depends on someone else's site being up. See
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
-- [Open an issue](https://github.com/TheAgencyMGE/shelfledger/issues/new?template=missing-item.yml)
-  with what's on the box.
-- Edit `data/catalog.json` on github.com and add a line. See
-  [CONTRIBUTING.md](CONTRIBUTING.md), which walks through it.
+## The catalogue
 
-You never have to wait for either. Anything you type into the app yourself is a
-real entry and works exactly like a catalogued one, the catalogue just saves
-you typing.
+Separate from the radar, `data/catalog.json` holds about 19,800 items with
+official item numbers. It powers autocomplete when you add something by hand,
+and barcode lookups when you scan. It is missing plenty, especially older
+releases and almost all barcodes. One item is one line, so adding one is a
+one-line pull request.
 
 ## Roadmap
 
-Not built yet. Roughly in the order they're likely to happen:
+Not built yet:
 
-- A duplicate detector, for flagging the same figure logged twice. Happens
-  constantly if you buy lots.
-- Better catalogue coverage. Barcodes above all, then older releases.
-- Action figures, anime figures and statues as first-class categories. The
-  storage and the UI already handle them; there's just no catalogue data yet.
-- A shareable read-only shelf: a link that encodes the collection in the URL
-  itself, so you can show off a shelf without anything being stored on a server.
-  URL length limits make this harder than it sounds and it may not survive
-  contact with a large collection.
-- Scarcity numbers in the collection view, not only on the radar.
+- More manufacturers, starting with anything on the unsupported list that
+  becomes readable.
+- Retailer exclusives from the shops rather than only from the makers.
+- A duplicate detector for the collection, which matters if you buy lots.
+- A shareable read-only shelf encoded in a URL, with nothing stored server side.
 
-Not planned, ever: accounts, cloud sync, price tracking that phones home, or
-analytics.
+Not planned, ever: accounts, cloud sync, or analytics.
 
 ## Licence
 
 MIT. See [LICENSE](LICENSE). Take it, fork it, run your own copy.
 
-The catalogue data in `data/` is factual information about products, names and
-item numbers, contributed for anyone to use.
-
-The one vendored dependency is [ZXing](https://github.com/zxing-js/library) (MIT)
-for barcode decoding in browsers without a built-in decoder. It's committed to
-the repo rather than loaded from a CDN, for the reason you'd expect. See
-[`src/assets/vendor/README.md`](src/assets/vendor/README.md).
+The one vendored dependency is [ZXing](https://github.com/zxing-js/library)
+(MIT), for barcode decoding in browsers without a built-in decoder. It is
+committed to the repo rather than loaded from a CDN, for the reason you would
+expect.
 
 ## Not affiliated with anyone
 
 ShelfLedger is an independent, fan-made tool. It is not affiliated with,
-endorsed by, sponsored by, or connected to Funko, LLC, or any other
-manufacturer, distributor, or retailer. "Funko" and "Pop!" are trademarks of
-Funko, LLC. All product names, trademarks, and brands are the property of their
-respective owners, and appear here only to describe the items being catalogued.
+endorsed by, or sponsored by Funko, Mezco Toyz, Bandai Spirits, Hasbro, NECA,
+McFarlane Toys, Sideshow, Medicom, or any other manufacturer, distributor or
+retailer. All product names, trademarks and brands are the property of their
+respective owners, and appear here only to describe the items being tracked.

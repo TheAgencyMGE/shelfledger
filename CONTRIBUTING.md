@@ -1,6 +1,52 @@
 # Contributing
 
-Two kinds of help are useful here, and one of them needs no programming at all.
+Three kinds of help are useful here, and one of them needs no programming at
+all.
+
+## Adding a manufacturer to the radar
+
+This is the most valuable thing anyone can do right now. A source is one file in
+`scripts/sources/` that exports `meta` and `collect()`, plus one line in
+`scripts/sources/index.mjs`.
+
+```js
+export const meta = {
+  id: 'example',
+  label: 'Example Toys',
+  manufacturer: 'Example',
+  homepage: 'https://example.com/',
+  retailer: 'Example Shop',
+  category: 'action-figure',
+};
+
+export async function collect({ fetchText, allowed, sleep, delay, today, log }) {
+  // return { releases, visited }
+}
+```
+
+The rules, which are not negotiable because they are what keeps this welcome on
+other people's servers:
+
+- **Listing pages only.** Never request individual product pages. If a source
+  cannot be read from listings, it does not go in.
+- **Prefer structured data** the site already publishes, such as schema.org
+  blocks, over parsing prose.
+- **Respect `allowed()`**, which is the robots.txt check for that host. Skip any
+  path it rejects.
+- **Space requests out** with the `sleep(delay)` you are handed.
+- **Fail loudly.** Throw rather than returning a half-built list. The
+  orchestrator catches it, keeps the previous run's rows for your source, and
+  reports the failure on the site.
+- **Return the shared release shape** so the radar never needs to know which
+  source a row came from. Copy the fields from an existing adapter.
+
+Add parsing tests to `test/sources.test.mjs` against a fixed markup sample
+pasted from the real page. Tests must never hit the network.
+
+If a manufacturer genuinely cannot be automated, say so in `UNSUPPORTED` in
+`index.mjs` with the concrete reason and what would have to change. Do not stub
+it out with invented releases. An honest gap is worth more than fake coverage,
+and the about page renders that list straight from the data.
 
 ## Adding something to the catalogue
 

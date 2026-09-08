@@ -56,15 +56,21 @@ const DEMO_ITEMS = [
  * the load event catches a half-rendered page.
  */
 const SHOTS = [
-  { name: 'collection.png', route: '', width: 1280, height: 900, waitFor: '.shelf li:nth-child(8)' },
-  { name: 'radar.png', route: 'radar/', width: 1280, height: 900, waitFor: '.release[data-match="true"]' },
+  { name: 'radar.png', route: '', width: 1280, height: 900, waitFor: '.release[data-match="true"]' },
   {
-    name: 'wishlist-mobile.png',
-    route: 'wishlist/',
+    name: 'collection.png',
+    route: 'collection/',
+    width: 1280,
+    height: 900,
+    waitFor: '.shelf li:nth-child(8)',
+  },
+  {
+    name: 'radar-mobile.png',
+    route: '',
     width: 420,
     height: 840,
     mobile: true,
-    waitFor: '.shelf li:nth-child(3)',
+    waitFor: '.release',
   },
 ];
 
