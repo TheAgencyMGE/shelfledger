@@ -1,160 +1,59 @@
 /**
- * Rebuilds data/releases.json from Funko's own public catalogue pages.
+ * Rebuilds data/releases.json from public manufacturer listing pages.
  *
- * Why these pages: each one renders a schema.org ItemList in the HTML with the
- * product name, item number, price, and stock state already structured. That
- * means one request per section instead of one per product, which is both far
- * less load on their server and far less to go wrong.
+ * Each source is an adapter in scripts/sources. This file only orchestrates:
+ * it checks robots.txt per host, runs each adapter in turn, and keeps going
+ * when one of them breaks. A source that fails is recorded in the output with
+ * its error so the site can say so, and the previous run's releases for that
+ * source are carried forward rather than vanishing off the radar.
  *
- * The limited edition drop page additionally prints a drop date and a run size
- * on each tile. Those two fields are the ones collectors actually plan around,
- * so they are parsed out of the markup rather than the JSON-LD.
+ * The run only refuses to write when every source failed, because that means
+ * the problem is here rather than out there.
  *
- * MAINTENANCE NOTE: this is scraping, so it is only as stable as someone else's
- * markup. Revisit if the run starts reporting zero products for a source, the
- * likely causes are a renamed category path, a switch to client-side rendering,
- * or the ItemList block moving. Do not raise the schedule above once a day, and
- * do not add per-product requests to make up for a broken source; fix the
- * source instead.
- *
- * Output is committed to the repo, so every change to the calendar is a
- * reviewable diff.
+ * MAINTENANCE: this is scraping, so it is only as stable as someone else's
+ * markup. A source reporting zero products usually means a renamed path or a
+ * switch to client side rendering. Fix the adapter; do not add per-product
+ * requests to compensate, and do not raise the schedule above once a day.
  */
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
-import {
-  fetchText,
-  robotsChecker,
-  extractJsonLd,
-  productsFromItemList,
-  decodeEntities,
-  sleep,
-  POLITE_DELAY_MS,
-  USER_AGENT,
-} from './lib/source.mjs';
+import { fetchText, robotsChecker, sleep, POLITE_DELAY_MS, USER_AGENT } from './lib/source.mjs';
+import { SOURCES, unsupportedForOutput } from './sources/index.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const OUT_FILE = path.join(ROOT, 'data', 'releases.json');
 const CATALOG_FILE = path.join(ROOT, 'data', 'catalog.json');
-const ORIGIN = 'https://funko.com';
-const SCHEMA_VERSION = 1;
+const SCHEMA_VERSION = 2;
 
-const SOURCES = [
-  { channel: 'new-release', path: '/new-featured/new-releases/', label: 'Funko new releases' },
-  { channel: 'coming-soon', path: '/new-featured/coming-soon/', label: 'Funko coming soon' },
-  { channel: 'pre-order', path: '/new-featured/pre-order/', label: 'Funko pre-orders' },
-  { channel: 'exclusive', path: '/new-featured/exclusives/', label: 'Funko exclusives' },
-  { channel: 'limited-drop', path: '/limited-edition-drops/', label: 'Funko limited edition drops' },
-];
-
-const MONTHS = {
-  jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6,
-  jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12,
-};
-
-function availabilityOf(offer) {
-  const raw = String(offer?.availability ?? '').toLowerCase();
-  if (raw.includes('preorder') || raw.includes('presale')) return 'pre-order';
-  if (raw.includes('outofstock') || raw.includes('soldout')) return 'out-of-stock';
-  if (raw.includes('instock')) return 'in-stock';
-  if (raw.includes('backorder')) return 'backorder';
-  return null;
-}
-
-/**
- * The drop tiles print "Sep 08" with no year, and the page shows a rolling
- * window: recent drops that have already happened, plus the next few weeks.
- *
- * So the current year is nearly always right. Only two cases are not:
- *   - a date far enough ahead that it must be last year's drop still listed;
- *   - a date almost a full year behind, which happens in late December when
- *     January dates appear.
- *
- * Getting this backwards puts a past drop a year into the future, where it
- * sits at the bottom of the radar looking like news.
- */
-export function resolveDropDate(month, day, today = new Date()) {
-  const m = MONTHS[String(month).slice(0, 3).toLowerCase()];
-  const d = Number(day);
-  if (!m || !Number.isInteger(d) || d < 1 || d > 31) return null;
-
-  const year = today.getUTCFullYear();
-  const at = (y) => new Date(Date.UTC(y, m - 1, d));
-  const dayDiff = (date) => (date.getTime() - today.getTime()) / 86400000;
-
-  let resolved = at(year);
-  if (dayDiff(resolved) > 120) resolved = at(year - 1);
-  else if (dayDiff(resolved) < -300) resolved = at(year + 1);
-
-  // Guard against 31 April and friends rolling into the next month.
-  if (resolved.getUTCMonth() !== m - 1) return null;
-  return resolved.toISOString().slice(0, 10);
-}
-
-/**
- * Pull drop date and run size off the limited-edition tiles and key them by
- * item number. Each tile prints the badge before its product link, so the
- * markup is split on the badge wrapper and read forwards.
- */
-export function parseDropBadges(html, today = new Date()) {
-  const badges = new Map();
-  const chunks = html.split('loyalty-exclusive-stamp-badge').slice(1);
-
-  for (const chunk of chunks) {
-    const window = chunk.slice(0, 4000);
-    const sku = window.match(/href="[^"]*\/(\d+)\.html"/)?.[1];
-    if (!sku) continue;
-
-    const month = window.match(/class="ss-month[^"]*">\s*([A-Za-z]{3,})\s*</)?.[1];
-    const day = window.match(/class="ss-day[^"]*">\s*(\d{1,2})\s*</)?.[1];
-    const qty = window.match(/class="ss-available-qty[^"]*">\s*([\d,]+)\s*</)?.[1];
-    const label = window.match(/class="ss-available-label[^"]*">\s*([A-Za-z]+)\s*</)?.[1];
-
-    const entry = {};
-    if (month && day) entry.releaseDate = resolveDropDate(month, day, today);
-    // Only treat the count as a run size when the tile actually says "pieces".
-    if (qty && /piece/i.test(label ?? '')) entry.limitedRunSize = Number(qty.replace(/,/g, ''));
-    if (Object.keys(entry).length) badges.set(sku, entry);
-  }
-  return badges;
-}
-
-function normaliseRelease(product, { channel, badges }) {
-  const sku = String(product.sku ?? product.mpn ?? '').trim();
-  const offer = Array.isArray(product.offers) ? product.offers[0] : product.offers;
-  const badge = sku ? badges.get(sku) : null;
-
-  const price = Number(offer?.price);
+/** Fields every release ends up with, so the app never sees a ragged row. */
+function normalise(release, isoDay) {
   return {
-    id: sku ? `funko-${sku}` : null,
-    sku: sku || null,
-    name: decodeEntities(product.name ?? '').trim(),
-    license: null, // filled in from the catalogue below when we know it
-    category: 'funko-pop',
-    channel,
-    releaseDate: badge?.releaseDate ?? null,
-    limitedRunSize: badge?.limitedRunSize ?? null,
-    price: Number.isFinite(price) ? price : null,
-    currency: offer?.priceCurrency ?? null,
-    availability: availabilityOf(offer),
-    retailer: 'Funko Shop',
-    url: typeof product['@id'] === 'string' ? product['@id'] : (offer?.url ?? null),
-  };
-}
-
-/** Later sources win on channel, but never overwrite a date with nothing. */
-function mergeRelease(existing, incoming) {
-  return {
-    ...existing,
-    ...incoming,
-    releaseDate: incoming.releaseDate ?? existing.releaseDate,
-    limitedRunSize: incoming.limitedRunSize ?? existing.limitedRunSize,
-    price: incoming.price ?? existing.price,
-    // A limited drop is the more specific fact about an item; keep it.
-    channel: existing.channel === 'limited-drop' ? 'limited-drop' : incoming.channel,
+    id: release.id,
+    sourceId: release.sourceId,
+    manufacturer: release.manufacturer ?? null,
+    line: release.line ?? null,
+    category: release.category ?? 'action-figure',
+    sku: release.sku ?? null,
+    name: release.name,
+    license: release.license ?? null,
+    releaseDate: release.releaseDate ?? null,
+    releaseWindow: release.releaseWindow ?? null,
+    preorderDate: release.preorderDate ?? null,
+    price: typeof release.price === 'number' ? release.price : null,
+    currency: release.currency ?? null,
+    availability: release.availability ?? null,
+    limitedRunSize: release.limitedRunSize ?? null,
+    exclusive: release.exclusive ?? null,
+    isNewRelease: Boolean(release.isNewRelease),
+    isLimitedDrop: Boolean(release.isLimitedDrop),
+    isReissue: Boolean(release.isReissue),
+    retailer: release.retailer ?? null,
+    url: release.url ?? null,
+    firstSeen: isoDay,
+    lastSeen: isoDay,
   };
 }
 
@@ -185,95 +84,126 @@ async function readExisting() {
 function sameData(a, b) {
   const strip = (payload) =>
     JSON.stringify(
-      (payload?.releases ?? []).map(({ firstSeen, lastSeen, ...rest }) => rest),
+      (payload?.releases ?? [])
+        .map(({ firstSeen, lastSeen, ...rest }) => rest)
+        .sort((x, y) => String(x.id).localeCompare(String(y.id))),
     );
   return strip(a) === strip(b);
+}
+
+/** One robots checker per host, fetched once. */
+function robotsCache() {
+  const cache = new Map();
+  return (homepage) => {
+    const origin = new URL(homepage).origin;
+    if (!cache.has(origin)) cache.set(origin, robotsChecker(origin));
+    return cache.get(origin);
+  };
 }
 
 async function main() {
   const today = new Date();
   const isoDay = today.toISOString().slice(0, 10);
   console.log(`ShelfLedger release scrape ${isoDay}`);
-  console.log(`user-agent: ${USER_AGENT}`);
+  console.log(`user-agent: ${USER_AGENT}\n`);
 
-  const allowed = await robotsChecker(ORIGIN);
-  const byId = new Map();
-  const usedSources = [];
-  let failures = 0;
+  const previous = await readExisting();
+  const previousById = new Map((previous?.releases ?? []).map((r) => [r.id, r]));
+  const getRobots = robotsCache();
+
+  const collected = [];
+  const sourceReports = [];
 
   for (const source of SOURCES) {
-    if (!allowed(source.path)) {
-      console.log(`  skip   ${source.path}: disallowed by robots.txt`);
-      continue;
-    }
+    const { meta } = source;
+    const log = (message) => console.log(`  ${meta.id.padEnd(9)} ${message}`);
     try {
-      const { text, url } = await fetchText(`${ORIGIN}${source.path}`);
-      const products = productsFromItemList(extractJsonLd(text));
-      const badges = source.channel === 'limited-drop' ? parseDropBadges(text, today) : new Map();
+      const allowed = await getRobots(meta.homepage);
+      const { releases, visited } = await source.collect({
+        fetchText,
+        allowed,
+        sleep,
+        delay: POLITE_DELAY_MS,
+        today,
+        log,
+      });
 
-      let added = 0;
-      for (const product of products) {
-        const release = normaliseRelease(product, { channel: source.channel, badges });
-        if (!release.id || !release.name) continue;
-        byId.set(release.id, byId.has(release.id) ? mergeRelease(byId.get(release.id), release) : release);
-        added += 1;
-      }
-      console.log(
-        `  ok     ${source.path.padEnd(34)} ${String(added).padStart(3)} products` +
-          (badges.size ? `, ${badges.size} dated` : ''),
-      );
-      if (added > 0) usedSources.push({ label: source.label, url });
-      else failures += 1;
+      if (releases.length === 0) throw new Error('no products parsed');
+      collected.push(...releases);
+      sourceReports.push({
+        id: meta.id,
+        label: meta.label,
+        manufacturer: meta.manufacturer,
+        homepage: meta.homepage,
+        url: visited[0] ?? meta.homepage,
+        ok: true,
+        count: releases.length,
+      });
+      log(`ok, ${releases.length} releases`);
     } catch (err) {
-      failures += 1;
-      console.log(`  FAIL   ${source.path}: ${err.message}`);
+      // Keep what this source gave last time rather than dropping it off the
+      // radar because of one bad run.
+      const carried = [...previousById.values()].filter((r) => r.sourceId === meta.id);
+      collected.push(...carried);
+      sourceReports.push({
+        id: meta.id,
+        label: meta.label,
+        manufacturer: meta.manufacturer,
+        homepage: meta.homepage,
+        url: meta.homepage,
+        ok: false,
+        count: carried.length,
+        error: err.message,
+        carriedForward: carried.length > 0,
+      });
+      console.log(`  ${meta.id.padEnd(9)} FAILED: ${err.message}`);
+      if (carried.length) console.log(`  ${meta.id.padEnd(9)} kept ${carried.length} from last run`);
     }
     await sleep(POLITE_DELAY_MS);
   }
 
-  if (byId.size === 0) {
-    // Never overwrite good data with an empty file because the site changed.
-    console.error('No products parsed from any source. Leaving the existing file alone.');
+  if (sourceReports.every((s) => !s.ok)) {
+    console.error('\nEvery source failed. Leaving the existing file alone.');
     process.exit(1);
   }
-  if (failures === SOURCES.length) process.exit(1);
 
   const licences = await licencesByNumber();
-  const previous = await readExisting();
-  const firstSeenById = new Map((previous?.releases ?? []).map((r) => [r.id, r.firstSeen]));
+  const byId = new Map();
+  for (const raw of collected) {
+    const release = normalise(raw, isoDay);
+    if (!release.id || !release.name) continue;
+    const before = previousById.get(release.id);
+    if (!release.license && release.sku) release.license = licences.get(release.sku) ?? null;
+    release.firstSeen = before?.firstSeen ?? isoDay;
+    byId.set(release.id, release);
+  }
 
-  const releases = [...byId.values()]
-    .map((release) => ({
-      ...release,
-      license: release.license ?? licences.get(release.sku) ?? null,
-      firstSeen: firstSeenById.get(release.id) ?? isoDay,
-      lastSeen: isoDay,
-    }))
-    .sort((a, b) => {
-      if (a.releaseDate && b.releaseDate && a.releaseDate !== b.releaseDate) {
-        return a.releaseDate.localeCompare(b.releaseDate);
-      }
-      if (a.releaseDate && !b.releaseDate) return -1;
-      if (!a.releaseDate && b.releaseDate) return 1;
-      return a.name.localeCompare(b.name);
-    });
+  const releases = [...byId.values()].sort((a, b) => {
+    if (a.releaseDate && b.releaseDate && a.releaseDate !== b.releaseDate) {
+      return a.releaseDate.localeCompare(b.releaseDate);
+    }
+    if (a.releaseDate && !b.releaseDate) return -1;
+    if (!a.releaseDate && b.releaseDate) return 1;
+    return a.name.localeCompare(b.name);
+  });
 
   const payload = {
     schemaVersion: SCHEMA_VERSION,
     generatedAt: today.toISOString(),
-    source: 'Public catalogue pages on funko.com, read once a day.',
-    sources: usedSources,
+    sources: sourceReports,
+    unsupported: unsupportedForOutput(),
     releaseCount: releases.length,
     releases,
   };
 
+  const ok = sourceReports.filter((s) => s.ok).length;
   const dated = releases.filter((r) => r.releaseDate).length;
-  const limited = releases.filter((r) => r.limitedRunSize).length;
-  console.log(`\n  ${releases.length} releases, ${dated} with dates, ${limited} with run sizes`);
+  const fresh = releases.filter((r) => r.firstSeen === isoDay).length;
+  console.log(`\n  ${releases.length} releases from ${ok}/${sourceReports.length} sources`);
+  console.log(`  ${dated} dated, ${fresh} first seen today`);
 
   if (previous && sameData(previous, payload)) {
     console.log('  no change since the last run, not rewriting the file');
-    // Signals the workflow that there is nothing to commit.
     if (process.env.GITHUB_OUTPUT) {
       await writeFile(process.env.GITHUB_OUTPUT, 'changed=false\n', { flag: 'a' });
     }
@@ -288,11 +218,8 @@ async function main() {
   }
 }
 
-// Allow the parsing helpers to be unit tested without running a scrape.
-// Only run when invoked directly, so the test file can import the parsers
-// without kicking off a scrape.
-const invokedDirectly =
-  process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url;
+// Only run when invoked directly, so tests can import the helpers.
+const invokedDirectly = process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url;
 
 if (invokedDirectly) {
   main().catch((err) => {
