@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="ShelfLedger">
+  <rect width="64" height="64" rx="12" fill="#16141B"/>
+  <rect x="10" y="14" width="16" height="9" rx="1.5" fill="#FFB347"/>
+  <rect x="10" y="23" width="44" height="2" fill="#2E2839"/>
+  <rect x="30" y="29" width="14" height="8" rx="1.5" fill="#D98724"/>
+  <rect x="10" y="37" width="44" height="2" fill="#2E2839"/>
+  <rect x="14" y="43" width="14" height="8" rx="1.5" fill="#EDE7F0"/>
+  <rect x="10" y="51" width="44" height="2" fill="#9C93AC"/>
+</svg>
