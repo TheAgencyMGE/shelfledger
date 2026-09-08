@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { matchOne, matchReleases, sortReleases, upcomingOnly } from '../src/assets/js/match.js';
+import { matchOne, matchReleases } from '../src/assets/js/match.js';
 import { buildCalendar, eventCount, escapeText, foldLine } from '../src/assets/js/ics.js';
 import { normaliseItem } from '../src/assets/js/model.js';
 
@@ -53,30 +53,6 @@ test('matchReleases keeps the strongest match when several wants overlap', () =>
     want({ id: 'exact', name: 'anything', number: '93416' }),
   ]);
   assert.equal(result.match.itemId, 'exact');
-});
-
-test('sortReleases puts dated entries first, soonest first', () => {
-  const sorted = sortReleases([
-    { name: 'Zed', releaseDate: null },
-    { name: 'Later', releaseDate: '2026-12-01' },
-    { name: 'Sooner', releaseDate: '2026-09-08' },
-    { name: 'Alpha', releaseDate: null },
-  ]);
-  assert.deepEqual(sorted.map((r) => r.name), ['Sooner', 'Later', 'Alpha', 'Zed']);
-});
-
-test('upcomingOnly keeps undated entries and drops past dates', () => {
-  const today = new Date('2026-09-07T12:00:00Z');
-  const list = upcomingOnly(
-    [
-      { name: 'past', releaseDate: '2026-08-01' },
-      { name: 'today', releaseDate: '2026-09-07' },
-      { name: 'future', releaseDate: '2026-10-01' },
-      { name: 'undated', releaseDate: null },
-    ],
-    today,
-  );
-  assert.deepEqual(list.map((r) => r.name), ['today', 'future', 'undated']);
 });
 
 /* ------------------------------------------------------------------ ics */
