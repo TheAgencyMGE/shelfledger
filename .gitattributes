@@ -1,0 +1,8 @@
+# Keep line endings consistent for everyone, whatever they develop on.
+* text=auto eol=lf
+
+*.png binary
+*.ico binary
+
+# The catalogue is one item per line so pull requests stay readable.
+data/catalog.json -diff

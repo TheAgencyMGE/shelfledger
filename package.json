@@ -1,0 +1,22 @@
+{
+  "name": "shelfledger",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Local-first collectibles tracker. No account, no server, no tracking.",
+  "type": "module",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "lint": "node scripts/lint.mjs",
+    "test": "node --test test/*.test.mjs",
+    "check": "npm run lint && npm test && npm run build",
+    "icons": "python scripts/gen_icons.py",
+    "scrape": "node scripts/scrape-releases.mjs",
+    "seed-catalog": "node scripts/seed-catalog.mjs",
+    "serve": "node scripts/serve.mjs",
+    "screenshots": "node scripts/screenshots.mjs"
+  }
+}
