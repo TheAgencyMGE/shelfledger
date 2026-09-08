@@ -1,0 +1,25 @@
+<!--@
+{
+  "route": "/",
+  "nav": "collection",
+  "title": "ShelfLedger, track your collectibles without an account",
+  "description": "A free collection tracker for Funko-style vinyl figures and action figures. No sign-up, no cloud, no ads. Everything you log stays in your own browser.",
+  "scripts": ["pages/collection.js"]
+}
+@-->
+    <div class="page-head">
+      <h1>Collection</h1>
+      <div class="head-actions">
+        <button type="button" class="btn btn-primary" data-add>Add item</button>
+        <button type="button" class="btn" data-scan-start>Scan</button>
+      </div>
+    </div>
+
+    <section data-collection aria-label="Your collection"></section>
+
+    <noscript>
+      <p class="muted">
+        ShelfLedger keeps your collection in your browser's own database, so it needs JavaScript.
+        There is no server-rendered version because there is no server holding your data.
+      </p>
+    </noscript>
