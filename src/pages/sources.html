@@ -1,0 +1,19 @@
+<!--@
+{
+  "route": "/sources/",
+  "nav": "sources",
+  "title": "Source health, ShelfLedger",
+  "description": "Which sources the release radar reads, when each was last checked successfully, how many listings it produced, and what is not covered.",
+  "scripts": ["pages/sources.js"]
+}
+@-->
+    <div class="page-head">
+      <h1>Sources</h1>
+    </div>
+
+    <p class="muted" style="max-width: 62ch">
+      One row per source, with the last successful check and what it produced. If a source breaks,
+      its releases stay on the radar from the previous run and this page says so.
+    </p>
+
+    <div data-source-health></div>

@@ -14,6 +14,7 @@ import { readFile, writeFile, mkdir, rm, cp, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
+import { writeFeeds } from './feeds.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '..');
 const SRC = path.join(ROOT, 'src');
@@ -61,12 +62,9 @@ function routeToOutput(route) {
   };
 }
 
-// Radar is the product. Everything after it supports it, and the nav says so.
 const NAV_ITEMS = [
   { id: 'radar', route: '', label: 'Radar', primary: true },
-  { id: 'collection', route: 'collection/', label: 'Collection' },
-  { id: 'wishlist', route: 'wishlist/', label: 'Wishlist' },
-  { id: 'backup', route: 'backup/', label: 'Backup' },
+  { id: 'sources', route: 'sources/', label: 'Sources' },
   { id: 'about', route: 'about/', label: 'About' },
 ];
 
@@ -99,12 +97,12 @@ function structuredData(meta, url) {
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       license: 'https://opensource.org/licenses/MIT',
       featureList: [
-        'Daily feed of new announcements, preorders and upcoming releases',
-        'Covers Funko, Mezco and Tamashii Nations lines',
-        'Filter by manufacturer, line, category and release stage',
-        'Wishlist matching that runs in your own browser',
-        'Track what you own, want, or used to own',
-        'Export and import everything as a single JSON file',
+        'Daily feed of new announcements, preorders, restocks and releases',
+        'Covers manufacturers and retailers in one merged view',
+        'Filter by manufacturer, line, franchise, seller, date and price',
+        'Every filtered view has its own shareable URL',
+        'RSS, JSON feed, CSV and calendar export',
+        'No account, no analytics, no tracking',
       ],
     };
   }
@@ -150,50 +148,6 @@ async function buildPages() {
     built.push({ ...meta, url });
   }
   return built;
-}
-
-/**
- * data/catalog.json is stored one item per line so a pull request that adds a
- * single figure is a single-line diff. Browsers get something leaner: a shard
- * per category with the field names hoisted out of every row.
- */
-async function buildCatalogShards() {
-  const src = path.join(DATA, 'catalog.json');
-  if (!existsSync(src)) {
-    console.warn('  ! data/catalog.json not found - skipping catalog shards');
-    return [];
-  }
-  const catalog = JSON.parse(await readFile(src, 'utf8'));
-  const FIELDS = ['id', 'name', 'number', 'license', 'series', 'variant', 'barcodes'];
-  const byCategory = new Map();
-
-  for (const item of catalog.items) {
-    const cat = item.category || 'other';
-    if (!byCategory.has(cat)) byCategory.set(cat, []);
-    byCategory.get(cat).push(FIELDS.map((f) => item[f] ?? null));
-  }
-
-  const outDir = path.join(DIST, 'data', 'catalog');
-  await mkdir(outDir, { recursive: true });
-  const shards = [];
-
-  for (const [cat, rows] of [...byCategory].sort()) {
-    const payload = { version: catalog.version, category: cat, fields: FIELDS, rows };
-    const json = JSON.stringify(payload);
-    await writeFile(path.join(outDir, `${cat}.json`), json);
-    shards.push({ category: cat, count: rows.length, bytes: json.length, file: `${cat}.json` });
-  }
-
-  await writeFile(
-    path.join(outDir, 'index.json'),
-    JSON.stringify({
-      version: catalog.version,
-      updated: catalog.updated,
-      fields: FIELDS,
-      shards: shards.map(({ category, count, file }) => ({ category, count, file })),
-    }),
-  );
-  return shards;
 }
 
 async function buildSitemap(pages) {
@@ -256,7 +210,6 @@ async function finaliseServiceWorker(pages) {
     ...shellAssets,
     `${BASE}manifest.webmanifest`,
     `${BASE}data/releases.json`,
-    `${BASE}data/catalog/index.json`,
   ];
 
   sw = sw
@@ -285,11 +238,16 @@ async function main() {
   if (existsSync(path.join(DATA, 'releases.json'))) {
     await cp(path.join(DATA, 'releases.json'), path.join(DIST, 'data', 'releases.json'));
   }
-  const shards = await buildCatalogShards();
-  for (const s of shards) {
-    console.log(
-      `  catalog   ${s.category.padEnd(14)} ${String(s.count).padStart(6)} items  ${(s.bytes / 1024).toFixed(0)}kb`,
-    );
+  const releasesFile = path.join(DIST, 'data', 'releases.json');
+  if (existsSync(releasesFile)) {
+    const payload = JSON.parse(await readFile(releasesFile, 'utf8'));
+    const { written, manifest } = await writeFeeds(DIST, payload.releases ?? [], {
+      siteUrl: `${ORIGIN}${BASE}`,
+      generatedAt: payload.generatedAt ?? new Date().toISOString(),
+    });
+    console.log(`  feeds     ${written.length} files, ${manifest.length} facet feeds`);
+  } else {
+    console.warn('  ! data/releases.json not found, skipping feeds');
   }
 
   await buildSitemap(pages);

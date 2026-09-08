@@ -26,6 +26,8 @@
     <link rel="icon" href="{{base}}assets/icons/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="{{base}}assets/icons/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="{{base}}assets/icons/apple-touch-icon.png" />
+    <link rel="alternate" type="application/rss+xml" title="ShelfLedger radar" href="{{base}}feed.xml" />
+    <link rel="alternate" type="application/feed+json" title="ShelfLedger radar" href="{{base}}feed.json" />
     <link rel="manifest" href="{{base}}manifest.webmanifest" />
     <link rel="stylesheet" href="{{base}}assets/css/app.css" />
     <script type="application/ld+json">{{jsonld}}</script>
@@ -61,15 +63,15 @@
       <div class="wrap">
         <nav class="foot-links" aria-label="Project links">
           <a href="https://github.com/TheAgencyMGE/shelfledger">GitHub</a>
-          <a href="https://github.com/TheAgencyMGE/shelfledger/issues/new?template=missing-item.yml"
-            >Report a missing item</a
-          >
+          <a href="{{base}}feed.xml">RSS</a>
+          <a href="{{base}}feed.json">JSON</a>
+          <a href="{{base}}sources/">Source health</a>
           <a href="{{base}}about/">How it works</a>
         </nav>
         <p class="foot-legal">
-          Independent and fan-made. Not affiliated with, endorsed by, or sponsored by Funko, LLC or
-          any other manufacturer. All product names and trademarks belong to their owners. MIT
-          licensed, &copy; {{year}} ShelfLedger contributors.
+          Independent and fan-made. Not affiliated with, endorsed by, or sponsored by any
+          manufacturer, distributor or retailer. All product names and trademarks belong to their
+          owners. MIT licensed, &copy; {{year}} ShelfLedger contributors.
         </p>
       </div>
     </footer>

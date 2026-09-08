@@ -2,9 +2,9 @@
 {
   "route": "/about/",
   "nav": "about",
-  "title": "How ShelfLedger works, and where the data comes from",
-  "description": "Which manufacturers the release radar reads, which ones it cannot, what ShelfLedger stores, and what never leaves your browser.",
-  "scripts": ["pages/about.js"]
+  "title": "How the ShelfLedger radar works",
+  "description": "How ShelfLedger collects action figure announcements, preorders and releases, what counts as new, and why there is no account.",
+  "scripts": []
 }
 @-->
     <div class="page-head">
@@ -13,73 +13,74 @@
 
     <div class="prose">
       <p>
-        ShelfLedger is a release radar for action figures, Funko Pops, anime figures and other
-        collectibles. It tracks new announcements, preorders, exclusives and upcoming drops. There is
-        no account, and nothing you enter leaves your browser.
+        ShelfLedger is a free, open-source release radar for action figures, Funko Pops, anime
+        figures and collectibles. It tracks new announcements, preorders, restocks and releases
+        across manufacturers and retailers. There is no account and nothing to sign up for.
       </p>
 
-      <h2>Coverage</h2>
+      <h2>What counts as new</h2>
       <p>
-        A daily job reads public listing pages, one request per listing, and writes what it finds to
-        a static file. It identifies itself as <code>ShelfLedgerBot</code>, reads
-        <code>robots.txt</code> first, and never requests individual product pages.
+        This is the part worth reading. A product is only shown as newly announced when a source
+        published a date saying it was newly listed. Entertainment Earth, for example, stamps its
+        tiles with the day a product went up and whether it was a new preorder or a new arrival.
+        That date is what the radar uses.
       </p>
-
-      <div data-coverage>
-        <p class="muted">Loading coverage.</p>
-      </div>
-
       <p>
-        When a source breaks, its entries are kept from the previous run and the radar says so
-        rather than quietly dropping them. Nothing in the feed is invented: if a manufacturer is not
-        in the first list, ShelfLedger is not tracking it.
+        When no source publishes a date, the release has no announcement date and can never appear
+        under Just announced, however recently ShelfLedger noticed it. The day a row entered the
+        dataset is recorded separately, shown on the
+        <a href="../sources/">sources page</a>, and never used to call anything new. A product
+        already released months ago also has any announcement date stripped, so a retailer relisting
+        an old figure does not read as news.
       </p>
 
-      <h2>Where your data lives</h2>
+      <h2>Where the data comes from</h2>
       <p>
-        Your collection and wishlist go into IndexedDB, a database built into your browser, on your
-        device. Nothing else. No cookies, no accounts, no server copy. Clearing site data deletes it
-        permanently and nobody can restore it for you, which is the trade for nobody being able to
-        read it.
+        A scheduled job reads public listing pages once a day, one request per listing, and writes
+        what it finds to a static file. It identifies itself as <code>ShelfLedgerBot</code>, reads
+        <code>robots.txt</code> first and obeys it, and never requests individual product pages. The
+        <a href="../sources/">sources page</a> lists every source, when each was last read
+        successfully, and what is not covered.
+      </p>
+      <p>
+        The same figure listed by a retailer and its manufacturer is merged into one release with
+        several places to buy it. The manufacturer is trusted for what a product is; retailers are
+        trusted for price, stock and listing dates.
       </p>
 
-      <h2>What this app requests</h2>
-      <p>Three kinds of file, all from this same domain:</p>
+      <h2>Feeds and exports</h2>
       <ul>
-        <li>the pages, styles and scripts;</li>
-        <li><code>data/releases.json</code>, the release feed;</li>
-        <li><code>data/catalog/*.json</code>, the shared item catalogue, fetched when you search.</li>
+        <li><a href="../feed.xml">RSS</a> and <a href="../feed.json">JSON feed</a> for the full radar.</li>
+        <li>Per manufacturer and per line feeds, listed in <a href="../feeds/index.json">feeds/index.json</a>.</li>
+        <li><a href="../radar.csv">CSV</a> of everything, and <a href="../radar.ics">a calendar</a> of dated releases.</li>
+        <li>CSV, JSON and calendar exports of whatever you have filtered to, from the radar itself.</li>
       </ul>
       <p>
-        Identical files for everyone. No query strings, no identifiers, no request bodies. No
-        analytics of any kind, no error reporting, no third-party fonts, no embeds, no iframes.
+        Every filter lives in the address bar, so a view like Marvel Legends preorders is just a URL
+        you can bookmark or send to someone. That is the whole personalisation model: no account, no
+        stored profile, nothing to lose.
       </p>
 
-      <h2>Wishlist matching</h2>
+      <h2>What this site does not do</h2>
       <p>
-        The radar flags releases that line up with your wishlist. The feed is public and the same for
-        every visitor; the comparison runs here in the page, against the list stored on this device.
-        No server learns what you are hunting for.
+        No accounts. No analytics of any kind, including the privacy-branded ones. No error
+        reporting, no third-party fonts, no embeds, no iframes, no advertising, no fingerprinting.
+        The page requests its own files and one JSON feed, and that is all. The build fails if
+        anyone adds a third-party script, an external stylesheet, a webfont or a call to an absolute
+        URL.
       </p>
 
-      <h2>Backups replace sync</h2>
+      <h2>Running your own</h2>
       <p>
-        <a href="../backup/">Export</a> writes your whole collection to one JSON file, and import
-        reads it back. Getting that file to another device is up to you, which is less convenient
-        and a lot more private than an account.
-      </p>
-
-      <h2>Scanning</h2>
-      <p>
-        Scanning uses your browser's own barcode decoder where one exists, and a copy of ZXing served
-        from this domain where it does not. Camera frames are read and discarded in the page. No
-        image and no scanned number is uploaded, and the camera stops when you close the scanner.
+        It is a static site with no runtime dependencies, built and published by GitHub Actions onto
+        GitHub Pages. Fork it, and it runs. Adding a source is one file, documented in
+        <a href="https://github.com/TheAgencyMGE/shelfledger/blob/main/CONTRIBUTING.md">CONTRIBUTING</a>.
       </p>
 
       <h2>Licence</h2>
       <p>
-        MIT. Independent and fan-made, with no connection to Funko, Mezco, Bandai or any other
-        manufacturer, distributor or retailer. Product names and trademarks belong to their owners
-        and appear here only to describe the things being tracked.
+        MIT. Independent and fan-made, with no connection to any manufacturer, distributor or
+        retailer. Product names and trademarks belong to their owners and appear here only to
+        describe the things being tracked.
       </p>
     </div>

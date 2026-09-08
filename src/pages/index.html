@@ -2,16 +2,13 @@
 {
   "route": "/",
   "nav": "radar",
-  "title": "ShelfLedger, a release radar for action figures and collectibles",
-  "description": "Open-source release radar for action figures, Funko Pops, anime figures and collectibles. Track new announcements, preorders, exclusives and upcoming drops without an account.",
+  "title": "ShelfLedger, a free action figure release radar",
+  "description": "Free, open-source action figure release radar. Track new announcements, preorders, restocks and releases across manufacturers and retailers without an account.",
   "scripts": ["pages/radar.js"]
 }
 @-->
     <div class="page-head">
       <h1>Radar</h1>
-      <div class="head-actions">
-        <button type="button" class="btn" data-ics disabled>Download .ics</button>
-      </div>
     </div>
 
     <div data-radar-meta></div>
@@ -20,17 +17,20 @@
 
     <div class="filters" data-radar-filters></div>
 
+    <div class="toolbar" data-radar-tools></div>
+
     <section data-radar-list aria-label="Releases">
       <p class="muted">Loading.</p>
     </section>
 
     <p class="hint radar-foot">
-      Matching runs in this browser against the wishlist on this device.
+      Every filter is in the address bar, so any view can be bookmarked or shared.
       <a href="about/">Where the data comes from</a>
     </p>
 
     <noscript>
       <p class="muted">
         The radar reads a static JSON file and filters it in the page, so it needs JavaScript.
+        The same data is available as <a href="feed.xml">RSS</a> and <a href="feed.json">JSON</a>.
       </p>
     </noscript>
