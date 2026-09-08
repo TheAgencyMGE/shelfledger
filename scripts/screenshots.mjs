@@ -1,15 +1,12 @@
 /**
- * Regenerates the README screenshots.
+ * Regenerates the README screenshots, and checks for horizontal overflow while
+ * it has a browser open.
  *
- * A local authoring tool, like scripts/gen_icons.py. It needs Chrome installed;
- * CI never runs it, and the images it writes are committed.
+ * A local authoring tool. It needs Chrome installed, CI never runs it, and the
+ * images it writes are committed. There is no demo data to seed: the radar
+ * renders the real feed, so these are screenshots of the real thing.
  *
  *     npm run screenshots
- *
- * The demo collection is seeded into a throwaway copy of the build rather than
- * into the app, so no demo or seeding code ever ships. The screenshots are of
- * the real UI, with the real catalogue and the real release calendar, the only
- * thing invented is somebody's collection.
  */
 
 import { rm, mkdir, cp, readFile, writeFile } from 'node:fs/promises';
@@ -24,6 +21,7 @@ const ROOT = path.resolve(import.meta.dirname, '..');
 const STAGE = path.join(ROOT, '.cache', 'screenshots');
 const OUT = path.join(ROOT, 'docs', 'screenshots');
 const PORT = 8899;
+const DEBUG_PORT = 9333;
 
 const CHROME_CANDIDATES = [
   'C:/Program Files/Google/Chrome/Application/chrome.exe',
@@ -34,43 +32,24 @@ const CHROME_CANDIDATES = [
   '/usr/bin/chromium',
 ];
 
-/** A believable shelf: a few owned, a few wanted, one sold on. */
-const DEMO_ITEMS = [
-  { name: 'Pop! Pikachu (Flocked)', number: '59873', license: 'Pokémon', series: 'Pop! Games', status: 'have', quantity: 3, condition: 'boxed' },
-  { name: 'Pop! Sonic with Emerald', number: '94203', license: 'Sonic the Hedgehog', status: 'have', condition: 'boxed', exclusive: 'GameStop' },
-  { name: 'Pop! Roboute Guilliman', number: '94189', license: 'Warhammer', status: 'have', condition: 'boxed', chase: true },
-  { name: 'Pop! Chun-Li (2026)', number: '94168', license: 'Street Fighter', status: 'have', quantity: 2, condition: 'boxed', exclusive: 'Target' },
-  { name: 'Pop! Worf', number: '93633', license: 'Star Trek', status: 'have', condition: 'boxed' },
-  { name: 'Pop! Naruto Uzumaki', number: '71098', license: 'Naruto', status: 'have', condition: 'loose' },
-  { name: 'Pop! Batman Beyond', number: '93125', license: 'DC Comics', series: 'Pop! Heroes', status: 'have', condition: 'boxed' },
-  { name: 'Pop! Grid Xenomorph (Glow)', number: '93416', license: 'Horror', status: 'want' },
-  { name: 'Pop! Atom Eve (Pink Energy)', number: '93409', license: 'Invincible', status: 'want' },
-  { name: 'Pop! Michelangelo (Eating Pizza)', number: '93415', license: 'TMNT', status: 'want' },
-  { name: 'Pop! Rhysand', number: '95966', license: 'ACOTAR', status: 'want' },
-  { name: 'Pop! Bluey', number: '62368', license: 'Bluey', status: 'had' },
-];
-
-/**
- * `waitFor` is a selector that only exists once the page has finished its real
- * work. Seeding goes through IndexedDB, which is asynchronous, so capturing on
- * the load event catches a half-rendered page.
- */
+/** `waitFor` is a selector that only exists once the page has really finished. */
 const SHOTS = [
-  { name: 'radar.png', route: '', width: 1280, height: 900, waitFor: '.release[data-match="true"]' },
+  { name: 'radar.png', route: '', width: 1280, height: 940, waitFor: '.release:nth-child(6)' },
   {
-    name: 'collection.png',
-    route: 'collection/',
+    name: 'radar-filtered.png',
+    route: '?stage=new-preorders',
     width: 1280,
-    height: 900,
-    waitFor: '.shelf li:nth-child(8)',
+    height: 940,
+    waitFor: '.release:nth-child(4)',
   },
+  { name: 'sources.png', route: 'sources/', width: 1280, height: 940, waitFor: '.cov-list' },
   {
     name: 'radar-mobile.png',
     route: '',
-    width: 420,
-    height: 840,
+    width: 400,
+    height: 860,
     mobile: true,
-    waitFor: '.release',
+    waitFor: '.release:nth-child(3)',
   },
 ];
 
@@ -86,32 +65,11 @@ function findChrome() {
 async function stageBuild() {
   await rm(STAGE, { recursive: true, force: true });
   await mkdir(STAGE, { recursive: true });
-
-  // Build at the root so the throwaway server can be dumb about paths.
   await run(process.execPath, [path.join(ROOT, 'scripts', 'build.mjs')], {
     env: { ...process.env, SITE_BASE: '/' },
     cwd: ROOT,
   });
   await cp(path.join(ROOT, 'dist'), STAGE, { recursive: true });
-
-  await writeFile(
-    path.join(STAGE, 'seed-demo.js'),
-    `import * as store from '/assets/js/store.js';
-const items = ${JSON.stringify(DEMO_ITEMS, null, 2)};
-await store.replaceCollection([]);
-for (const item of items) await store.saveItem(item);
-document.documentElement.dataset.seeded = 'true';
-`,
-  );
-
-  for (const { route } of SHOTS) {
-    const file = path.join(STAGE, route, 'index.html');
-    const html = await readFile(file, 'utf8');
-    await writeFile(
-      file,
-      html.replace('</body>', '    <script type="module" src="/seed-demo.js"></script>\n  </body>'),
-    );
-  }
 }
 
 function serve() {
@@ -120,6 +78,7 @@ function serve() {
     '.css': 'text/css; charset=utf-8',
     '.js': 'text/javascript; charset=utf-8',
     '.json': 'application/json; charset=utf-8',
+    '.xml': 'application/xml; charset=utf-8',
     '.png': 'image/png',
     '.svg': 'image/svg+xml',
     '.ico': 'image/x-icon',
@@ -140,10 +99,7 @@ function serve() {
   return new Promise((resolve) => server.listen(PORT, () => resolve(server)));
 }
 
-const DEBUG_PORT = 9333;
-
-/** Minimal DevTools Protocol client. Node 22 has a global WebSocket, so this
- *  needs no packages. */
+/** Minimal DevTools Protocol client. Node has a global WebSocket, so no packages. */
 class CDP {
   #ws;
   #id = 0;
@@ -154,7 +110,9 @@ class CDP {
     client.#ws = new WebSocket(url);
     await new Promise((resolve, reject) => {
       client.#ws.addEventListener('open', resolve, { once: true });
-      client.#ws.addEventListener('error', () => reject(new Error('CDP socket failed')), { once: true });
+      client.#ws.addEventListener('error', () => reject(new Error('CDP socket failed')), {
+        once: true,
+      });
     });
     client.#ws.addEventListener('message', (event) => {
       const msg = JSON.parse(event.data);
@@ -185,7 +143,6 @@ async function browserTargets() {
 }
 
 async function launchChrome(chrome) {
-  const profile = path.join(STAGE, '.profile');
   const child = spawn(
     chrome,
     [
@@ -194,7 +151,7 @@ async function launchChrome(chrome) {
       '--hide-scrollbars',
       '--no-first-run',
       '--no-default-browser-check',
-      `--user-data-dir=${profile}`,
+      `--user-data-dir=${path.join(STAGE, '.profile')}`,
       `--remote-debugging-port=${DEBUG_PORT}`,
       'about:blank',
     ],
@@ -203,8 +160,7 @@ async function launchChrome(chrome) {
 
   for (let i = 0; i < 60; i += 1) {
     try {
-      const targets = await browserTargets();
-      if (targets.some((t) => t.type === 'page')) return child;
+      if ((await browserTargets()).some((t) => t.type === 'page')) return child;
     } catch {
       /* not listening yet */
     }
@@ -223,7 +179,6 @@ async function capture(page, { name, route, width, height, mobile = false, waitF
   });
   await page.send('Page.navigate', { url: `http://localhost:${PORT}/${route}` });
 
-  // Poll for the thing that proves the page actually finished.
   let ready = false;
   for (let i = 0; i < 80; i += 1) {
     await new Promise((r) => setTimeout(r, 250));
@@ -238,8 +193,7 @@ async function capture(page, { name, route, width, height, mobile = false, waitF
   }
   if (!ready) throw new Error(`${name}: "${waitFor}" never appeared`);
 
-  // Let the toast about a new service worker version clear, so it does not sit
-  // over the content in a published screenshot.
+  // Clear the service worker toast so it does not sit over a published shot.
   await page.send('Runtime.evaluate', {
     expression: `document.querySelectorAll('.toast').forEach(t => t.remove())`,
   });
@@ -248,6 +202,29 @@ async function capture(page, { name, route, width, height, mobile = false, waitF
   const { data } = await page.send('Page.captureScreenshot', { format: 'png' });
   await writeFile(path.join(OUT, name), Buffer.from(data, 'base64'));
   console.log(`  ${name.padEnd(22)} ${width}x${height}`);
+}
+
+/** Horizontal overflow is the layout bug that actually matters on a phone. */
+async function checkOverflow(page, width) {
+  await page.send('Emulation.setDeviceMetricsOverride', {
+    width,
+    height: 860,
+    deviceScaleFactor: 2,
+    mobile: true,
+  });
+  await page.send('Page.navigate', { url: `http://localhost:${PORT}/` });
+  await new Promise((r) => setTimeout(r, 3000));
+  const { result } = await page.send('Runtime.evaluate', {
+    expression: `(() => {
+      const de = document.documentElement;
+      const bad = [...document.querySelectorAll('*')]
+        .filter((el) => { const r = el.getBoundingClientRect(); return r.width > 0 && r.right > de.clientWidth + 1; })
+        .map((el) => el.tagName + '.' + String(el.className).slice(0, 30));
+      return JSON.stringify({ clientW: de.clientWidth, scrollW: de.scrollWidth, offenders: bad.slice(0, 5) });
+    })()`,
+    returnByValue: true,
+  });
+  return JSON.parse(result.value);
 }
 
 async function main() {
@@ -259,12 +236,24 @@ async function main() {
   const server = await serve();
   const child = await launchChrome(chrome);
   let page;
+  let failures = 0;
   try {
     const target = (await browserTargets()).find((t) => t.type === 'page');
     page = await CDP.attach(target.webSocketDebuggerUrl);
     await page.send('Page.enable');
     await page.send('Runtime.enable');
     for (const shot of SHOTS) await capture(page, shot);
+
+    for (const width of [360, 400, 768]) {
+      const result = await checkOverflow(page, width);
+      const ok = result.scrollW <= result.clientW;
+      if (!ok) failures += 1;
+      console.log(
+        `  overflow ${String(width).padEnd(5)} ${
+          ok ? 'none' : `${result.scrollW}px in ${result.clientW}px: ${result.offenders.join(', ')}`
+        }`,
+      );
+    }
   } finally {
     page?.close();
     child.kill();
@@ -274,6 +263,7 @@ async function main() {
   await new Promise((r) => setTimeout(r, 500));
   await rm(STAGE, { recursive: true, force: true }).catch(() => {});
   console.log(`screenshots -> ${path.relative(ROOT, OUT)}`);
+  if (failures) process.exitCode = 1;
 }
 
 main().catch((err) => {

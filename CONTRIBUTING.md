@@ -1,22 +1,19 @@
 # Contributing
 
-Three kinds of help are useful here, and one of them needs no programming at
-all.
+The most useful thing anyone can do is add a source.
 
-## Adding a manufacturer to the radar
+## Adding a source
 
-This is the most valuable thing anyone can do right now. A source is one file in
-`scripts/sources/` that exports `meta` and `collect()`, plus one line in
-`scripts/sources/index.mjs`.
+A source is one file in `scripts/sources/` that exports `meta` and `collect()`,
+plus one line in `scripts/sources/index.mjs`.
 
 ```js
 export const meta = {
   id: 'example',
   label: 'Example Toys',
-  manufacturer: 'Example',
+  kind: 'retailer',            // or 'manufacturer'
   homepage: 'https://example.com/',
   retailer: 'Example Shop',
-  category: 'action-figure',
 };
 
 export async function collect({ fetchText, allowed, sleep, delay, today, log }) {
@@ -24,147 +21,111 @@ export async function collect({ fetchText, allowed, sleep, delay, today, log }) 
 }
 ```
 
-The rules, which are not negotiable because they are what keeps this welcome on
-other people's servers:
+### The rules
+
+These are not negotiable, because they are what keeps this welcome on other
+people's servers.
 
 - **Listing pages only.** Never request individual product pages. If a source
   cannot be read from listings, it does not go in.
+- **Respect `allowed()`.** It is the robots.txt check for that host. Skip any
+  path it rejects, and do not reach for a query string that robots.txt disallows
+  just because it returns more rows.
 - **Prefer structured data** the site already publishes, such as schema.org
-  blocks, over parsing prose.
-- **Respect `allowed()`**, which is the robots.txt check for that host. Skip any
-  path it rejects.
+  blocks or data attributes, over parsing prose.
 - **Space requests out** with the `sleep(delay)` you are handed.
 - **Fail loudly.** Throw rather than returning a half-built list. The
-  orchestrator catches it, keeps the previous run's rows for your source, and
-  reports the failure on the site.
-- **Return the shared release shape** so the radar never needs to know which
-  source a row came from. Copy the fields from an existing adapter.
+  orchestrator catches it, carries your source's previous rows forward, and
+  reports the failure on the sources page.
 
-Add parsing tests to `test/sources.test.mjs` against a fixed markup sample
-pasted from the real page. Tests must never hit the network.
+### The rule about dates
 
-If a manufacturer genuinely cannot be automated, say so in `UNSUPPORTED` in
-`index.mjs` with the concrete reason and what would have to change. Do not stub
-it out with invented releases. An honest gap is worth more than fake coverage,
-and the about page renders that list straight from the data.
+This one has its own heading because getting it wrong is the bug that caused
+this rework.
 
-## Adding something to the catalogue
+**Only set `listedDate` when the source actually published a date.** Some
+retailers stamp a listing with the day it went up. That is a real announcement
+and the radar will treat it as one. Most sources publish nothing of the kind,
+and for those `listedDate` must stay `null`.
 
-The catalogue is `data/catalog.json`. It is stored one item per line specifically
-so that adding a figure is a one-line change anyone can read.
+Never substitute the current date, and never use the fact that your adapter is
+seeing a product for the first time. ShelfLedger records that separately as
+`firstSeenByShelfLedger`, and the code that decides what is new does not read it.
+A source that guesses will put years-old products under "just announced".
 
-If you would rather not touch a file at all, [open an
-issue](https://github.com/TheAgencyMGE/shelfledger/issues/new?template=missing-item.yml)
-with what you know and someone will add it. That is a completely fine way to
-contribute and it is the fastest route if you are not comfortable with git.
+Set `listingKind` alongside it: `new-preorder`, `new-arrival` or `restock`.
 
-To send it yourself, on github.com:
+### The release shape
 
-1. Open `data/catalog.json` and press the pencil icon to edit.
-2. Find roughly where your item belongs, entries are sorted by item number.
-3. Add one line, matching the format of its neighbours, remembering the comma at
-   the end of the previous line.
-4. Describe what you added and press "Propose changes".
+Return objects with these fields so the merge does not need to know which source
+a row came from. Copy an existing adapter; `entertainment-earth.mjs` is the most
+complete and `bigbadtoystore.mjs` is the smallest.
 
-One line looks like this:
+| Field | Notes |
+| ----- | ----- |
+| `id` | Unique and stable, prefixed with your source id |
+| `sourceId`, `sourceKind`, `retailer` | Who says so |
+| `manufacturer`, `name`, `sku` | What it is. SKUs are used to match across sellers |
+| `line`, `license`, `category` | Leave null rather than guessing |
+| `price`, `currency`, `availability` | What is happening now |
+| `listedDate`, `listingKind` | Only if published. See above |
+| `releaseDate`, `releaseWindow`, `preorderDate`, `arrivalDate` | Whatever the source states |
+| `limitedRunSize`, `exclusive` | If stated |
+| `url` | The listing you read it from |
 
-```json
-{"id":"funko-93125","name":"Pop! Batman Beyond","number":"93125","category":"funko-pop","license":"DC Comics","series":"Pop! Heroes","variant":null,"barcodes":["889698931250"],"verified":true,"url":"https://funko.com/pop-batman-beyond/93125.html"}
-```
+### Tests
 
-| Field       | What goes in it                                                                     |
-| ----------- | ----------------------------------------------------------------------------------- |
-| `id`        | `funko-<number>` for Funko items, or anything unique for other manufacturers          |
-| `name`      | The name as printed on the box                                                        |
-| `number`    | The item number on the box, as a string                                               |
-| `category`  | `funko-pop`, `action-figure`, `anime-figure`, `statue`, or `other`                     |
-| `license`   | The fandom or property, e.g. `DC Comics`. `null` if you are not sure                   |
-| `series`    | The line, e.g. `Pop! Heroes`. `null` if you are not sure                                |
-| `variant`   | Chase, glow, flocked, exclusive details. `null` if it is the plain release             |
-| `barcodes`  | Array of barcode numbers as strings. This is what makes scanning find it               |
-| `verified`  | `true` if you have the box in front of you. See below                                  |
-| `url`       | A public listing that backs up the details, or `null`                                  |
+Add parsing tests to `test/sources.test.mjs` against a fixed markup sample pasted
+from the real page. Tests must never hit the network. Include a case proving a
+listing with no date signal produces `listedDate: null`.
 
-### About `verified`
+### If it cannot be done
 
-Most of the catalogue was seeded from public product listings, and around 19,000
-of those entries had their name derived from a product URL rather than read off
-a box. Those are marked `"verified": false`. The name is usually right and
-occasionally slightly off, a missing hyphen, a dropped apostrophe, a
-parenthetical that got flattened.
-
-If you own the item and the name in the file does not match the box, fix the
-name and set `"verified": true`. That is one of the most useful contributions
-you can make, and it is genuinely a one-line diff.
-
-**Barcodes are the biggest gap.** The seed data has almost none, because they are
-not published anywhere machine-readable. Every barcode added makes scanning work
-for one more figure.
+Add an entry to `UNSUPPORTED` in `scripts/sources/index.mjs` with the concrete
+reason and what would have to change. Do not stub it out with invented releases.
+An honest gap is worth more than fake coverage, and the sources page renders that
+list straight from the data.
 
 ## Working on the app
 
 ```bash
 git clone https://github.com/TheAgencyMGE/shelfledger.git
 cd shelfledger
-npm run build     # writes dist/
-npm run serve     # http://localhost:8787/shelfledger/
-npm run check     # lint + tests + build, the same as CI
+npm run build
+npm run serve       # http://localhost:8787/shelfledger/
+npm run check       # lint, tests, build, the same as CI
+npm run scrape      # refresh data/releases.json from live sources
+npm run screenshots # regenerate README images, needs Chrome
 ```
 
-There are no dependencies to install. The app ships no runtime packages, and the
-build, tests, and scrapers use nothing outside the Node standard library. You
-need Node 20 or newer.
+Nothing to install. The app ships no runtime dependencies and the tooling uses
+only the Node standard library. Node 20 or newer.
 
-### The one rule
+### The other rule
 
-**No user data leaves the browser, ever.** There is no backend, no account, and
-no telemetry, and there is not going to be. Concretely, a change will be
-rejected if it:
+No accounts, no analytics, no client-side storage, no third-party requests. A
+change will be rejected if it adds any of them. `npm run lint` enforces most of
+it mechanically against both the source and the built output, so an accidental
+CDN font fails the build rather than shipping.
 
-- sends anything a person typed to any server;
-- adds analytics, error reporting, or usage measurement of any kind, including
-  the self-hosted and privacy-branded ones;
-- loads a script, stylesheet, font, or image from a third-party domain;
-- introduces a login, an account, or server-side storage.
-
-`npm run lint` enforces most of this mechanically and CI runs it against both
-the source and the built output, so an accidental CDN font fails the build
-rather than shipping.
-
-If a feature seems to need a server, it probably has a version that works with
-export and import instead. That is how sync works, and it is how calendar
-reminders work.
+Personalisation happens through the URL. If a feature seems to need somewhere to
+save state, it probably wants a query parameter and a link.
 
 ### Layout
 
 ```
-src/layout.html          the page shell every page is built into
-src/pages/*.html         one file per page, with its metadata at the top
-src/assets/js/           app code, plain ES modules, no framework
-src/assets/js/pages/     the entry point for each page
-src/sw.js                offline caching
-scripts/build.mjs        assembles dist/
-scripts/lint.mjs         syntax and privacy checks
-scripts/scrape-releases.mjs   the daily release calendar job
-scripts/seed-catalog.mjs      one-off catalogue seeding
-data/                    catalog.json and releases.json
-test/                    node:test, no framework
+src/layout.html            the page shell
+src/pages/*.html           one file per page, metadata at the top
+src/assets/js/stages.js    which bucket a release belongs in
+src/assets/js/identity.mjs deciding when two listings are the same figure
+src/assets/js/lines.mjs    figure lines, matched against real titles
+src/assets/js/url-state.js filters to and from the query string
+scripts/sources/           one adapter per source
+scripts/merge.mjs          listings become releases, and the date rules
+scripts/feeds.mjs          RSS, JSON feed, CSV and calendar output
+scripts/scrape-releases.mjs the daily orchestrator
+scripts/lint.mjs           syntax and privacy checks
 ```
 
-The logic worth testing lives in DOM-free modules (`model.js`, `search.js`,
-`match.js`, `ics.js`, `backup-format.js`) so it can be tested directly under
-`node --test`. Keep it that way where you can.
-
-### Touching the backup format
-
-`backup-format.js` handles the only copy of somebody's collection that exists
-outside their browser. Changes there need a test proving a file written by the
-old version still imports, and that export and import round-trip unchanged.
-
-## Scraping etiquette
-
-The release job reads someone else's public pages. If you change it, keep all of
-this true: an honest `User-Agent` with a link to the project, `robots.txt`
-respected, at most one run a day, and no per-product requests. The category
-pages publish structured data precisely so that one request gets everything 
-use it.
+The logic worth testing lives in DOM-free modules so it can run directly under
+`node --test`. Keep it that way.
