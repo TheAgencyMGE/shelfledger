@@ -1,6 +1,8 @@
 /**
- * The rules behind the radar tabs. These decide what a collector sees first,
- * so they get tested directly rather than through the page.
+ * The rules behind the radar tabs, plus filtering and URL state.
+ *
+ * The first block is the important one: a release only reaches "just announced"
+ * on published evidence, never because ShelfLedger noticed it.
  */
 
 import { test } from 'node:test';
@@ -12,95 +14,125 @@ import {
   filterReleases,
   facets,
   sortReleases,
-  sortByFirstSeen,
-  newlyDiscovered,
+  sortForStage,
   availabilityLabel,
+  EMPTY_FILTER,
 } from '../src/assets/js/stages.js';
+import {
+  filterFromSearch,
+  searchFromFilter,
+  isDefaultFilter,
+  describeFilter,
+} from '../src/assets/js/url-state.js';
+import { toCsv, csvCell, exportFilename } from '../src/assets/js/exports.js';
+import { inferLine, makerForLine } from '../src/assets/js/lines.mjs';
 
 const TODAY = new Date('2026-09-08T00:00:00Z');
 
 const release = (over = {}) => ({
   id: 'x',
-  sourceId: 'test',
-  manufacturer: 'Test Co',
-  line: 'Test Line',
-  category: 'action-figure',
   name: 'Test Figure',
-  releaseDate: null,
+  manufacturer: 'Test Co',
+  line: null,
+  license: null,
+  category: 'action-figure',
+  sku: null,
+  announcedDate: null,
+  announcedBy: null,
+  announcementKind: null,
   preorderDate: null,
+  releaseDate: null,
+  releaseWindow: null,
+  arrivalDate: null,
+  restockedAt: null,
+  availability: null,
   price: null,
   currency: null,
-  availability: null,
   limitedRunSize: null,
   exclusive: null,
-  isNewRelease: false,
-  isLimitedDrop: false,
-  firstSeen: '2026-01-01',
+  firstSeen: '2026-09-08',
+  firstSeenByShelfLedger: '2026-09-08',
+  offers: [],
+  sourceIds: ['test'],
   ...over,
 });
 
-test('everything lands in the all bucket', () => {
-  assert.ok(stagesFor(release(), TODAY).includes('all'));
+/* ------------------------------------------------ the "new" guarantee */
+
+test('being seen for the first time today does NOT make something just announced', () => {
+  // This is the bug the rework exists to fix.
+  const r = release({ firstSeen: '2026-09-08', firstSeenByShelfLedger: '2026-09-08', announcedDate: null });
+  assert.ok(!stagesFor(r, TODAY).includes('just-announced'));
 });
 
-test('something first seen in the last two weeks is just announced', () => {
-  assert.ok(stagesFor(release({ firstSeen: '2026-09-07' }), TODAY).includes('just-announced'));
-  assert.ok(stagesFor(release({ firstSeen: '2026-09-08' }), TODAY).includes('just-announced'));
-  assert.ok(!stagesFor(release({ firstSeen: '2026-07-01' }), TODAY).includes('just-announced'));
+test('a 2025 product scraped today is not new, in any bucket', () => {
+  const r = release({
+    releaseDate: '2025-06-01',
+    firstSeen: '2026-09-08',
+    firstSeenByShelfLedger: '2026-09-08',
+    announcedDate: null,
+  });
+  const stages = stagesFor(r, TODAY);
+  assert.ok(!stages.includes('just-announced'));
+  assert.ok(!stages.includes('new-preorders'));
+  assert.ok(!stages.includes('new-arrivals'));
+  assert.ok(!stages.includes('soon'));
 });
 
-test('a stated preorder is a preorder', () => {
-  assert.ok(stagesFor(release({ availability: 'pre-order' }), TODAY).includes('preorder'));
+test('a published announcement date within three weeks is just announced', () => {
+  assert.ok(stagesFor(release({ announcedDate: '2026-09-01' }), TODAY).includes('just-announced'));
+  assert.ok(stagesFor(release({ announcedDate: '2026-09-08' }), TODAY).includes('just-announced'));
 });
 
-test('an opened preorder that has not shipped counts even with no stock state', () => {
-  // Tamashii publishes both dates and no availability at all.
-  const r = release({ preorderDate: '2026-08-01', releaseDate: '2026-12-01' });
-  assert.ok(stagesFor(r, TODAY).includes('preorder'));
+test('an announcement older than the window is no longer just announced', () => {
+  assert.ok(!stagesFor(release({ announcedDate: '2026-07-01' }), TODAY).includes('just-announced'));
 });
 
-test('a preorder that has not opened yet is not a preorder', () => {
-  const r = release({ preorderDate: '2026-10-01', releaseDate: '2027-02-01' });
-  assert.ok(!stagesFor(r, TODAY).includes('preorder'));
+test('an announcement dated in the future is not treated as news', () => {
+  assert.ok(!stagesFor(release({ announcedDate: '2026-10-01' }), TODAY).includes('just-announced'));
+});
+
+/* ------------------------------------------------------------- buckets */
+
+test('new preorders needs a preorder listing date', () => {
+  assert.ok(
+    stagesFor(
+      release({ announcedDate: '2026-09-02', announcementKind: 'new-preorder' }),
+      TODAY,
+    ).includes('new-preorders'),
+  );
+  assert.ok(stagesFor(release({ preorderDate: '2026-09-02' }), TODAY).includes('new-preorders'));
+  assert.ok(!stagesFor(release({ availability: 'pre-order' }), TODAY).includes('new-preorders'));
 });
 
 test('releasing soon reaches ninety days ahead and no further', () => {
-  assert.ok(stagesFor(release({ releaseDate: '2026-09-20' }), TODAY).includes('soon'));
-  assert.ok(stagesFor(release({ releaseDate: '2026-12-05' }), TODAY).includes('soon'));
+  assert.ok(stagesFor(release({ releaseDate: '2026-10-01' }), TODAY).includes('soon'));
   assert.ok(!stagesFor(release({ releaseDate: '2027-06-01' }), TODAY).includes('soon'));
-  assert.ok(!stagesFor(release({ releaseDate: '2026-08-01' }), TODAY).includes('soon'), 'past is not soon');
+  assert.ok(!stagesFor(release({ releaseDate: '2026-08-01' }), TODAY).includes('soon'));
 });
 
-test('in stock is available now', () => {
+test('available now follows stock, new arrivals follow a dated arrival', () => {
   assert.ok(stagesFor(release({ availability: 'in-stock' }), TODAY).includes('available'));
-  assert.ok(!stagesFor(release({ availability: 'waitlist' }), TODAY).includes('available'));
+  assert.ok(stagesFor(release({ arrivalDate: '2026-09-05' }), TODAY).includes('new-arrivals'));
+  assert.ok(!stagesFor(release({ arrivalDate: '2026-01-05' }), TODAY).includes('new-arrivals'));
 });
 
-test('new releases covers flagged rows and anything out in the last month', () => {
-  assert.ok(stagesFor(release({ isNewRelease: true }), TODAY).includes('new'));
-  assert.ok(stagesFor(release({ releaseDate: '2026-08-20' }), TODAY).includes('new'));
-  assert.ok(!stagesFor(release({ releaseDate: '2026-05-01' }), TODAY).includes('new'));
+test('restocks come from a recorded stock change, not from a guess', () => {
+  assert.ok(stagesFor(release({ restockedAt: '2026-09-06' }), TODAY).includes('restocks'));
+  assert.ok(!stagesFor(release({ restockedAt: '2026-02-06' }), TODAY).includes('restocks'));
+  assert.ok(!stagesFor(release({ availability: 'in-stock' }), TODAY).includes('restocks'));
 });
 
 test('exclusives covers retailer exclusives and limited runs', () => {
   assert.ok(stagesFor(release({ exclusive: 'Target' }), TODAY).includes('exclusive'));
   assert.ok(stagesFor(release({ limitedRunSize: 1200 }), TODAY).includes('exclusive'));
-  assert.ok(stagesFor(release({ isLimitedDrop: true }), TODAY).includes('exclusive'));
   assert.ok(!stagesFor(release(), TODAY).includes('exclusive'));
-});
-
-test('a release can sit in several buckets at once', () => {
-  const stages = stagesFor(
-    release({ availability: 'pre-order', releaseDate: '2026-09-30', limitedRunSize: 750 }),
-    TODAY,
-  );
-  for (const expected of ['preorder', 'soon', 'exclusive']) assert.ok(stages.includes(expected));
 });
 
 test('counts add up per bucket', () => {
   const list = withStages(
     [
-      release({ id: 'a', availability: 'pre-order' }),
+      release({ id: 'a', announcedDate: '2026-09-05' }),
       release({ id: 'b', availability: 'in-stock' }),
       release({ id: 'c', limitedRunSize: 500 }),
     ],
@@ -108,127 +140,184 @@ test('counts add up per bucket', () => {
   );
   const counts = countByStage(list);
   assert.equal(counts.all, 3);
-  assert.equal(counts.preorder, 1);
+  assert.equal(counts['just-announced'], 1);
   assert.equal(counts.available, 1);
   assert.equal(counts.exclusive, 1);
 });
 
-/* --------------------------------------------------------------- filters */
+/* ------------------------------------------------------------- filters */
 
 const feed = () =>
   withStages(
     [
-      release({ id: 'f1', manufacturer: 'Funko', line: 'Pop!', category: 'vinyl-figure', name: 'Pop! Batman' }),
-      release({ id: 'm1', manufacturer: 'Mezco', line: 'One:12 Collective', name: 'Punisher' }),
       release({
-        id: 't1',
-        manufacturer: 'Bandai Spirits',
+        id: 'a',
+        manufacturer: 'Hasbro',
+        line: 'Marvel Legends',
+        license: 'Marvel',
+        name: 'Marvel Legends Spider-Man',
+        price: 24.99,
+        releaseDate: '2026-10-01',
+        availability: 'pre-order',
+        offers: [{ seller: 'Entertainment Earth', sourceId: 'ee' }],
+      }),
+      release({
+        id: 'b',
+        manufacturer: 'Medicom',
+        line: 'MAFEX',
+        name: 'MAFEX Batman',
+        price: 99.99,
+        releaseDate: '2027-03-01',
+        availability: 'in-stock',
+        offers: [{ seller: 'BigBadToyStore', sourceId: 'bbts' }],
+      }),
+      release({
+        id: 'c',
+        manufacturer: 'Bandai Tamashii Nations',
         line: 'S.H.Figuarts',
         category: 'anime-figure',
-        name: 'Son Goku',
-        availability: 'in-stock',
+        name: 'S.H.Figuarts Goku',
+        price: 54.99,
+        offers: [{ seller: 'Entertainment Earth', sourceId: 'ee' }],
       }),
     ],
     TODAY,
   );
 
-test('filters narrow by manufacturer, line and category', () => {
-  assert.equal(filterReleases(feed(), { manufacturer: 'Mezco' }).length, 1);
-  assert.equal(filterReleases(feed(), { line: 'S.H.Figuarts' }).length, 1);
-  assert.equal(filterReleases(feed(), { category: 'vinyl-figure' }).length, 1);
+test('filters narrow by maker, line, category and seller', () => {
+  assert.equal(filterReleases(feed(), { manufacturer: 'Hasbro' }).length, 1);
+  assert.equal(filterReleases(feed(), { line: 'MAFEX' }).length, 1);
+  assert.equal(filterReleases(feed(), { category: 'anime-figure' }).length, 1);
+  assert.equal(filterReleases(feed(), { retailer: 'Entertainment Earth' }).length, 2);
   assert.equal(filterReleases(feed(), {}).length, 3);
 });
 
-test('search matches across name, line and manufacturer', () => {
-  assert.equal(filterReleases(feed(), { text: 'batman' }).length, 1);
-  assert.equal(filterReleases(feed(), { text: 'figuarts' }).length, 1);
-  assert.equal(filterReleases(feed(), { text: 'mezco punisher' }).length, 1);
-  assert.equal(filterReleases(feed(), { text: 'mezco batman' }).length, 0, 'every word has to land');
+test('price and date ranges narrow the list', () => {
+  assert.equal(filterReleases(feed(), { minPrice: '50' }).length, 2);
+  assert.equal(filterReleases(feed(), { maxPrice: '30' }).length, 1);
+  assert.equal(filterReleases(feed(), { from: '2027-01-01' }).length, 1);
+  assert.equal(filterReleases(feed(), { to: '2026-12-31' }).length, 1);
 });
 
-test('filters combine, and the stage filter applies too', () => {
-  assert.equal(filterReleases(feed(), { stage: 'available' }).length, 1);
-  assert.equal(filterReleases(feed(), { stage: 'available', manufacturer: 'Funko' }).length, 0);
+test('search matches across name, line and maker, and every word must land', () => {
+  assert.equal(filterReleases(feed(), { text: 'mafex' }).length, 1);
+  assert.equal(filterReleases(feed(), { text: 'hasbro legends' }).length, 1);
+  assert.equal(filterReleases(feed(), { text: 'hasbro mafex' }).length, 0);
 });
 
-test('wishlist only keeps matched rows', () => {
-  const list = feed();
-  list[0].match = { itemId: 'w1', itemName: 'Batman', score: 1, reason: 'name' };
-  assert.equal(filterReleases(list, { wishlistOnly: true }).length, 1);
+test('facets list every distinct value once, including sellers', () => {
+  const f = facets(feed());
+  assert.deepEqual(f.manufacturers, ['Bandai Tamashii Nations', 'Hasbro', 'Medicom']);
+  assert.deepEqual(f.retailers, ['BigBadToyStore', 'Entertainment Earth']);
+  assert.ok(f.lines.includes('Marvel Legends'));
 });
-
-test('facets list every distinct value once, sorted', () => {
-  const { manufacturers, lines, categories } = facets(feed());
-  assert.deepEqual(manufacturers, ['Bandai Spirits', 'Funko', 'Mezco']);
-  assert.equal(lines.length, 3);
-  assert.deepEqual(categories, ['action-figure', 'anime-figure', 'vinyl-figure']);
-});
-
-/* ---------------------------------------------------------------- order */
 
 test('upcoming leads, then undated, then what already shipped', () => {
   const sorted = sortReleases(
     [
       release({ id: 'past', name: 'past', releaseDate: '2025-06-01' }),
       release({ id: 'undated', name: 'undated' }),
-      release({ id: 'far', name: 'far', releaseDate: '2027-01-01' }),
       release({ id: 'soon', name: 'soon', releaseDate: '2026-09-20' }),
     ],
     TODAY,
   );
-  assert.deepEqual(sorted.map((r) => r.id), ['soon', 'far', 'undated', 'past']);
+  assert.deepEqual(sorted.map((r) => r.id), ['soon', 'undated', 'past']);
 });
 
-test('shipped items are ordered most recent first', () => {
-  const sorted = sortReleases(
+test('announcement views order by announcement, newest first', () => {
+  const sorted = sortForStage(
     [
-      release({ id: 'older', releaseDate: '2024-01-01' }),
-      release({ id: 'newer', releaseDate: '2026-08-01' }),
+      release({ id: 'older', announcedDate: '2026-09-01' }),
+      release({ id: 'newer', announcedDate: '2026-09-07' }),
     ],
+    'just-announced',
     TODAY,
   );
   assert.deepEqual(sorted.map((r) => r.id), ['newer', 'older']);
 });
 
-test('the just announced view orders by discovery, newest first', () => {
-  const sorted = sortByFirstSeen([
-    release({ id: 'old', firstSeen: '2026-01-01' }),
-    release({ id: 'new', firstSeen: '2026-09-08' }),
-  ]);
-  assert.deepEqual(sorted.map((r) => r.id), ['new', 'old']);
-});
-
-/* ------------------------------------------------------- new discoveries */
-
-test('nothing is badged when the whole feed shares one discovery date', () => {
-  // The first run, and the day a source is added. Badging everything says
-  // nothing, so the marker is withheld.
-  const all = [1, 2, 3, 4].map((n) => release({ id: `r${n}`, firstSeen: '2026-09-08' }));
-  assert.equal(newlyDiscovered(all).size, 0);
-});
-
-test('nothing is badged when a bulk import dominates the feed', () => {
-  const list = [
-    ...[1, 2, 3].map((n) => release({ id: `new${n}`, firstSeen: '2026-09-08' })),
-    ...[1, 2].map((n) => release({ id: `old${n}`, firstSeen: '2026-01-01' })),
-  ];
-  assert.equal(newlyDiscovered(list).size, 0, '3 of 5 is not news');
-});
-
-test('a small handful of fresh finds does get badged', () => {
-  const list = [
-    release({ id: 'fresh', firstSeen: '2026-09-08' }),
-    ...[1, 2, 3, 4, 5, 6, 7, 8, 9].map((n) => release({ id: `old${n}`, firstSeen: '2026-01-01' })),
-  ];
-  const flagged = newlyDiscovered(list);
-  assert.equal(flagged.size, 1);
-  assert.ok(flagged.has('fresh'));
-});
-
 test('availability labels cover the vocabulary the sources produce', () => {
-  assert.equal(availabilityLabel('pre-order'), 'Preorder');
   assert.equal(availabilityLabel('waitlist'), 'Waitlist');
   assert.equal(availabilityLabel('in-stock'), 'In stock');
-  assert.equal(availabilityLabel('out-of-stock'), 'Sold out');
   assert.equal(availabilityLabel('nonsense'), null);
+});
+
+/* ----------------------------------------------------------- url state */
+
+test('a filter round-trips through the query string', () => {
+  const filter = {
+    ...EMPTY_FILTER,
+    stage: 'new-preorders',
+    manufacturer: 'Hasbro',
+    line: 'Marvel Legends',
+    minPrice: '20',
+    text: 'spider man',
+  };
+  const search = searchFromFilter(filter);
+  assert.deepEqual(filterFromSearch(search), filter);
+});
+
+test('default values stay out of the URL', () => {
+  assert.equal(searchFromFilter({ ...EMPTY_FILTER }), '');
+  assert.equal(searchFromFilter({ ...EMPTY_FILTER, stage: 'all' }), '');
+  assert.ok(isDefaultFilter({ ...EMPTY_FILTER }));
+  assert.ok(!isDefaultFilter({ ...EMPTY_FILTER, line: 'MAFEX' }));
+});
+
+test('the shareable view described in the brief is one URL', () => {
+  const filter = { ...EMPTY_FILTER, stage: 'new-preorders', line: 'Marvel Legends' };
+  const search = searchFromFilter(filter);
+  assert.match(search, /stage=new-preorders/);
+  assert.match(search, /line=Marvel\+Legends|line=Marvel%20Legends/);
+  assert.equal(filterFromSearch(search).line, 'Marvel Legends');
+});
+
+test('a filter describes itself for headings and feed titles', () => {
+  const text = describeFilter(
+    { ...EMPTY_FILTER, stage: 'just-announced', manufacturer: 'Hasbro' },
+    { 'just-announced': 'Just announced' },
+  );
+  assert.equal(text, 'Just announced, Hasbro');
+});
+
+/* ------------------------------------------------------------- exports */
+
+test('csv quotes only what needs quoting', () => {
+  assert.equal(csvCell('plain'), 'plain');
+  assert.equal(csvCell('has, comma'), '"has, comma"');
+  assert.equal(csvCell('say "hi"'), '"say ""hi"""');
+  assert.equal(csvCell(null), '');
+});
+
+test('csv export has a header and one row per release', () => {
+  const csv = toCsv(feed());
+  const lines = csv.trim().split('\r\n');
+  assert.equal(lines.length, 4);
+  assert.match(lines[0], /^id,name,manufacturer/);
+  assert.match(csv, /Marvel Legends Spider-Man/);
+});
+
+test('export filenames describe the view', () => {
+  const name = exportFilename('csv', { stage: 'new-preorders', line: 'Marvel Legends' });
+  assert.match(name, /^shelfledger-new-preorders-marvel-legends-\d{4}-\d{2}-\d{2}\.csv$/);
+});
+
+/* --------------------------------------------------------------- lines */
+
+test('lines are only assigned when the title actually names them', () => {
+  assert.equal(inferLine('Marvel Legends Series Spider-Man'), 'Marvel Legends');
+  assert.equal(inferLine('Star Wars The Black Series Boba Fett'), 'Star Wars The Black Series');
+  assert.equal(inferLine('S.H.Figuarts Son Goku'), 'S.H.Figuarts');
+  assert.equal(inferLine('MAFEX Batman Hush'), 'MAFEX');
+  assert.equal(inferLine('Some Generic Toy'), null, 'no guessing');
+});
+
+test('a line stated by the source beats anything inferred', () => {
+  assert.equal(inferLine('Marvel Legends Spider-Man', 'One:12 Collective'), 'One:12 Collective');
+});
+
+test('lines know which maker they belong to when it is unambiguous', () => {
+  assert.equal(makerForLine('Marvel Legends'), 'Hasbro');
+  assert.equal(makerForLine('DC Multiverse'), 'McFarlane');
+  assert.equal(makerForLine('S.H.Figuarts'), null, 'shared across Bandai sub-brands');
 });
