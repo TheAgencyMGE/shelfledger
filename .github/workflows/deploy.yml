@@ -1,0 +1,65 @@
+name: Build and deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race. In-progress runs finish, so a data commit that
+# lands mid-deploy still gets published by the run behind it.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      # No dependencies to install: the app ships no runtime packages and the
+      # build uses nothing but the Node standard library.
+
+      - name: Lint, including the privacy checks
+        run: npm run lint
+
+      - name: Test
+        run: npm test
+
+      - name: Build
+        env:
+          SITE_BASE: /shelfledger/
+          SITE_ORIGIN: https://theagencymge.github.io
+        run: npm run build
+
+      # The privacy checks matter most against what actually ships, so run them
+      # again over the built output rather than only over source.
+      - name: Re-check the built output for outbound requests
+        env:
+          SITE_ORIGIN: https://theagencymge.github.io
+        run: node scripts/lint.mjs --dist
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

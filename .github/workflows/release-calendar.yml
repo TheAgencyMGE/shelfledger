@@ -1,0 +1,62 @@
+name: Release calendar
+
+# Rebuilds data/releases.json from public catalogue pages once a day and commits
+# it only when something actually changed, so the history stays readable.
+#
+# Once a day is deliberate and should stay that way, see the note at the top of
+# scripts/scrape-releases.mjs.
+
+on:
+  schedule:
+    # 20:00 UTC is 12:00 PST. Actions cron only understands UTC, so this lands
+    # at 13:00 Pacific while daylight saving is in effect.
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write # only to trigger the deploy below
+
+concurrency:
+  group: release-calendar
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch the release calendar
+        run: npm run scrape
+
+      - name: Check the result is still valid
+        run: npm run lint
+
+      - name: Commit if the calendar changed
+        id: commit
+        run: |
+          if git diff --quiet -- data/releases.json; then
+            echo "No change to the release calendar."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          git config user.name  "shelfledger-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/releases.json
+          git commit -m "data: release calendar update $(date -u +%Y-%m-%d)"
+          git push
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+      # A push made with GITHUB_TOKEN does not start other workflows, so the
+      # deploy has to be asked for explicitly.
+      - name: Publish the updated calendar
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy.yml --ref main
