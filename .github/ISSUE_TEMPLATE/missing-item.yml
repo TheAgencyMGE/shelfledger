@@ -1,0 +1,77 @@
+name: Something is missing from the catalogue
+description: Tell us about a figure that is not in the shared catalogue, and we will add it.
+title: 'Catalogue: '
+labels: ['catalogue']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You do not need to know any code to fill this in, and you do not need to
+        wait for us, anything you type into ShelfLedger yourself works right
+        now, whether or not it is in the shared catalogue. This just gets it in
+        there for everyone else too.
+
+        If you would rather send the change directly, see
+        [CONTRIBUTING.md](../blob/main/CONTRIBUTING.md), it is one line in one
+        file.
+
+  - type: input
+    id: name
+    attributes:
+      label: What is it called?
+      description: The name as printed on the box.
+      placeholder: Pop! Batman Beyond
+    validations:
+      required: true
+
+  - type: input
+    id: number
+    attributes:
+      label: Item number
+      description: The number printed on the box, usually a corner of the front or the back.
+      placeholder: '93125'
+
+  - type: input
+    id: license
+    attributes:
+      label: Licence or fandom
+      placeholder: DC Comics
+
+  - type: input
+    id: series
+    attributes:
+      label: Series or line
+      placeholder: Pop! Heroes
+
+  - type: input
+    id: barcode
+    attributes:
+      label: Barcode
+      description: The long number under the barcode. This is what makes scanning find it.
+      placeholder: '889698931250'
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: What kind of thing is it?
+      options:
+        - Vinyl figure (Pop-style)
+        - Action figure
+        - Anime figure
+        - Statue
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: variant
+    attributes:
+      label: Variant details
+      description: Chase, glow, flocked, exclusive to a particular shop, and so on.
+      placeholder: Target exclusive, glow in the dark
+
+  - type: textarea
+    id: anything-else
+    attributes:
+      label: Anything else
+      description: A link to a listing helps us confirm the details.

@@ -1,0 +1,88 @@
+<!--@
+{
+  "route": "/about/",
+  "nav": "about",
+  "title": "How ShelfLedger works, and what it never does",
+  "description": "What ShelfLedger stores, where it stores it, what leaves your browser, and how to contribute to the open catalogue dataset.",
+  "scripts": []
+}
+@-->
+    <div class="page-head">
+      <h1>About</h1>
+    </div>
+
+    <div class="prose">
+      <p>
+        ShelfLedger tracks what you own, want, and used to own. There is no account and no server
+        holding your collection, so there is nothing to sign up for and nothing to leak.
+      </p>
+
+      <h2>Where your data lives</h2>
+      <p>
+        In IndexedDB, a database built into your browser, on your device. Nothing else. Clearing
+        site data deletes it permanently, and nobody can restore it for you. That is the trade for
+        nobody being able to read it.
+      </p>
+
+      <h2>What this app requests</h2>
+      <p>Three kinds of file, all from this same domain:</p>
+      <ul>
+        <li>the pages, styles, and scripts;</li>
+        <li><code>data/catalog/*.json</code>, the shared item catalogue, fetched when you search;</li>
+        <li><code>data/releases.json</code>, the public release calendar.</li>
+      </ul>
+      <p>
+        Identical files for everyone. No query strings, no identifiers, no request bodies. No
+        analytics of any kind, no error reporting, no third-party fonts, no embeds, no iframes.
+      </p>
+
+      <h2>The release radar</h2>
+      <p>
+        This is the one feature where you would expect a server. The release file is public and the
+        same for every visitor. Your browser downloads it and compares it against your wishlist
+        itself, so the flags you see were worked out on your device.
+      </p>
+      <p>
+        A scheduled job reads Funko's public catalogue pages once a day: new releases, coming soon,
+        pre-orders, exclusives, and the limited edition drop calendar. It names itself honestly in
+        its user agent and respects <code>robots.txt</code>. The result is committed to the
+        repository, so you can read the diff. Prices and dates are whatever the source said when it
+        ran.
+      </p>
+
+      <h2>Backups replace sync</h2>
+      <p>
+        Other trackers move your collection between devices by keeping it on their servers.
+        <a href="../backup/">Export</a> writes the whole thing to one JSON file instead. Getting
+        that file to another device is up to you, which is less convenient and a lot more private.
+      </p>
+
+      <h2>The catalogue</h2>
+      <p>
+        Around 19,800 items with official item numbers, seeded from public listings. It is
+        definitely missing things, especially older releases and barcodes. If something you own is
+        not there,
+        <a href="https://github.com/TheAgencyMGE/shelfledger/issues/new?template=missing-item.yml"
+          >open an issue</a
+        >
+        or send a pull request. One item is one line.
+      </p>
+      <p>
+        You never have to wait for that. Anything you type in yourself is a real entry with the same
+        standing as a catalogued one.
+      </p>
+
+      <h2>Scanning</h2>
+      <p>
+        Scanning uses your browser's own barcode decoder where one exists, and a copy of ZXing
+        served from this domain where it does not. Camera frames are read and discarded in the page.
+        No image and no scanned number is uploaded, and the camera stops when you close the scanner.
+      </p>
+
+      <h2>Licence</h2>
+      <p>
+        MIT. Independent and fan-made, with no connection to Funko, LLC or any other manufacturer,
+        distributor, or retailer. Product names and trademarks belong to their owners and appear
+        here only to describe the things being catalogued.
+      </p>
+    </div>

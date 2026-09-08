@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: How the app handles your data
+    url: https://theagencymge.github.io/shelfledger/about/
+    about: What is stored, where it is stored, and what leaves your browser.
+  - name: Ask a question
+    url: https://github.com/TheAgencyMGE/shelfledger/discussions
+    about: For anything that is not a bug or a missing catalogue entry.
