@@ -197,6 +197,20 @@ a:hover {
   color: var(--paper);
   box-shadow: inset 0 -2px 0 var(--lamp);
 }
+.site-nav a.nav-primary {
+  color: var(--paper);
+  font-weight: 600;
+}
+.site-nav a.nav-primary::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 0.4rem;
+  border-radius: 50%;
+  background: var(--lamp);
+  vertical-align: 1px;
+}
 
 @media (max-width: 44rem) {
   .head-inner {
@@ -645,6 +659,50 @@ dialog::backdrop {
 
 /* ---------------------------------------------------------------- radar */
 
+/* Stage tabs. These are the main navigation of the product, so they sit
+   directly under the title and stay put on a phone. */
+.stages {
+  display: flex;
+  gap: 0.15rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: var(--line);
+  margin-bottom: 1rem;
+}
+.stages::-webkit-scrollbar {
+  display: none;
+}
+.stage {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  padding: 0.5rem 0.6rem;
+  margin-bottom: -1px;
+  font: 500 0.875rem/1.2 var(--font-ui);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.stage:hover {
+  color: var(--paper);
+}
+.stage[aria-pressed="true"] {
+  color: var(--paper);
+  border-bottom-color: var(--lamp);
+}
+.stage-count {
+  font: 500 0.75rem/1 var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-dim);
+}
+.stage[aria-pressed="true"] .stage-count {
+  color: var(--lamp);
+}
+
 .radar-list {
   list-style: none;
   margin: 0;
@@ -668,6 +726,9 @@ dialog::backdrop {
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
+.release-main {
+  min-width: 0;
+}
 .release-name {
   font-size: 0.9375rem;
   font-weight: 550;
@@ -675,12 +736,14 @@ dialog::backdrop {
   overflow-wrap: anywhere;
 }
 .release-sub {
-  grid-column: 2;
   font-size: 0.8125rem;
   color: var(--muted);
   margin: 0;
 }
 .release-side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
   text-align: right;
   font: 500 0.8125rem/1.4 var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -688,15 +751,56 @@ dialog::backdrop {
 }
 .release-side .limited {
   color: var(--lamp);
-  display: block;
+}
+.avail {
+  font: 500 0.6875rem/1 var(--font-ui);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-dim);
+}
+.avail[data-v="in-stock"] {
+  color: var(--want);
+}
+.avail[data-v="pre-order"] {
+  color: var(--lamp);
+}
+
+/* Inline markers on a release name. */
+.flag {
+  font: 600 0.625rem/1 var(--font-ui);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  padding: 0.22rem 0.34rem;
+  margin-left: 0.4rem;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.flag-new {
+  color: #17130c;
+  background: var(--lamp);
+}
+.flag-want {
+  color: var(--want);
+  border: 1px solid color-mix(in srgb, var(--want) 45%, transparent);
+}
+
+.radar-foot {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: var(--line);
 }
 
 @media (max-width: 34rem) {
   .release {
-    grid-template-columns: 4rem 1fr;
+    grid-template-columns: 3.75rem 1fr;
+    row-gap: 0.25rem;
   }
   .release-side {
     grid-column: 2;
+    flex-direction: row;
+    gap: 0.75rem;
+    align-items: baseline;
     text-align: left;
   }
 }
@@ -803,4 +907,38 @@ dialog::backdrop {
   *::after {
     transition-duration: 0.001ms !important;
   }
+}
+
+/* ---------------------------------------------------------------- coverage */
+
+.cov-list {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+}
+.cov {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+  padding: 0.6rem 0 0.6rem 0.75rem;
+  border-bottom: var(--line);
+  border-left: 3px solid var(--edge);
+}
+.cov-ok {
+  border-left-color: var(--want);
+}
+.cov-down {
+  border-left-color: var(--alert);
+}
+.cov-gap {
+  border-left-color: var(--edge);
+}
+.cov p {
+  margin: 0.2rem 0 0;
+  max-width: 58ch;
+}
+.cov a {
+  font-size: 0.8125rem;
+  white-space: nowrap;
 }

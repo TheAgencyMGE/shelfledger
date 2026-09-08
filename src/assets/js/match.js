@@ -1,5 +1,5 @@
 /**
- * Cross-references the public release calendar against a wishlist.
+ * Cross-references the public release feed against a wishlist.
  *
  * This runs in the browser, on data the browser already has. The release file
  * is public and identical for everyone; which entries light up is worked out
@@ -55,20 +55,4 @@ export function matchReleases(releases, wants, threshold = DEFAULT_THRESHOLD) {
     }
     return best ? { ...release, match: best } : { ...release, match: null };
   });
-}
-
-/** Sort releases: dated entries first (soonest first), undated last by name. */
-export function sortReleases(releases) {
-  return [...releases].sort((a, b) => {
-    if (a.releaseDate && b.releaseDate) return a.releaseDate.localeCompare(b.releaseDate);
-    if (a.releaseDate) return -1;
-    if (b.releaseDate) return 1;
-    return a.name.localeCompare(b.name);
-  });
-}
-
-/** Releases whose date is today or later, in local terms. */
-export function upcomingOnly(releases, today = new Date()) {
-  const cutoff = today.toISOString().slice(0, 10);
-  return releases.filter((r) => !r.releaseDate || r.releaseDate >= cutoff);
 }

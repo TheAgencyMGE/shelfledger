@@ -61,14 +61,18 @@ function nextDay(iso) {
 
 function describe(release) {
   const bits = [];
+  const maker = [release.manufacturer, release.line].filter(Boolean).join(' ');
+  if (maker) bits.push(maker);
   if (release.sku) bits.push(`Item number ${release.sku}`);
-  if (release.channel) bits.push(`Listed under ${release.channel.replace(/-/g, ' ')}`);
+  if (release.releaseWindow) bits.push(`Ships ${release.releaseWindow}`);
+  if (release.preorderDate) bits.push(`Preorders open ${release.preorderDate}`);
   if (release.limitedRunSize) bits.push(`Limited to ${release.limitedRunSize} pieces`);
   if (typeof release.price === 'number') {
     bits.push(`${release.price.toFixed(2)} ${release.currency || 'USD'} at listing time`);
   }
+  if (release.retailer) bits.push(`Listed by ${release.retailer}`);
   if (release.match?.itemName) bits.push(`On your wishlist as "${release.match.itemName}"`);
-  bits.push('Added by ShelfLedger. Prices and dates come from the public catalogue and can change.');
+  bits.push('Added by ShelfLedger. Prices and dates come from public listings and can change.');
   return bits.join('\n');
 }
 

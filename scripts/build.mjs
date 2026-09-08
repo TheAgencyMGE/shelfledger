@@ -61,10 +61,11 @@ function routeToOutput(route) {
   };
 }
 
+// Radar is the product. Everything after it supports it, and the nav says so.
 const NAV_ITEMS = [
-  { id: 'collection', route: '', label: 'Collection' },
+  { id: 'radar', route: '', label: 'Radar', primary: true },
+  { id: 'collection', route: 'collection/', label: 'Collection' },
   { id: 'wishlist', route: 'wishlist/', label: 'Wishlist' },
-  { id: 'radar', route: 'radar/', label: 'Release radar' },
   { id: 'backup', route: 'backup/', label: 'Backup' },
   { id: 'about', route: 'about/', label: 'About' },
 ];
@@ -72,7 +73,14 @@ const NAV_ITEMS = [
 function navMarkup(current) {
   return NAV_ITEMS.map((item) => {
     const active = item.id === current;
-    return `        <li><a href="${BASE}${item.route}"${active ? ' aria-current="page"' : ''}>${item.label}</a></li>`;
+    const attrs = [
+      `href="${BASE}${item.route}"`,
+      active ? 'aria-current="page"' : '',
+      item.primary ? 'class="nav-primary"' : '',
+    ]
+      .filter(Boolean)
+      .join(' ');
+    return `        <li><a ${attrs}>${item.label}</a></li>`;
   }).join('\n');
 }
 
@@ -91,10 +99,12 @@ function structuredData(meta, url) {
       offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
       license: 'https://opensource.org/licenses/MIT',
       featureList: [
-        'Track collectibles you own, want, or used to own',
-        'Barcode scanning that runs entirely on your device',
-        'Export and import your collection as a single JSON file',
-        'Release calendar cross-referenced against your wishlist locally',
+        'Daily feed of new announcements, preorders and upcoming releases',
+        'Covers Funko, Mezco and Tamashii Nations lines',
+        'Filter by manufacturer, line, category and release stage',
+        'Wishlist matching that runs in your own browser',
+        'Track what you own, want, or used to own',
+        'Export and import everything as a single JSON file',
       ],
     };
   }

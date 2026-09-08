@@ -1,25 +1,36 @@
 <!--@
 {
   "route": "/",
-  "nav": "collection",
-  "title": "ShelfLedger, track your collectibles without an account",
-  "description": "A free collection tracker for Funko-style vinyl figures and action figures. No sign-up, no cloud, no ads. Everything you log stays in your own browser.",
-  "scripts": ["pages/collection.js"]
+  "nav": "radar",
+  "title": "ShelfLedger, a release radar for action figures and collectibles",
+  "description": "Open-source release radar for action figures, Funko Pops, anime figures and collectibles. Track new announcements, preorders, exclusives and upcoming drops without an account.",
+  "scripts": ["pages/radar.js"]
 }
 @-->
     <div class="page-head">
-      <h1>Collection</h1>
+      <h1>Radar</h1>
       <div class="head-actions">
-        <button type="button" class="btn btn-primary" data-add>Add item</button>
-        <button type="button" class="btn" data-scan-start>Scan</button>
+        <button type="button" class="btn" data-ics disabled>Download .ics</button>
       </div>
     </div>
 
-    <section data-collection aria-label="Your collection"></section>
+    <div data-radar-meta></div>
+
+    <nav class="stages" data-stages aria-label="Release stage"></nav>
+
+    <div class="filters" data-radar-filters></div>
+
+    <section data-radar-list aria-label="Releases">
+      <p class="muted">Loading.</p>
+    </section>
+
+    <p class="hint radar-foot">
+      Matching runs in this browser against the wishlist on this device.
+      <a href="about/">Where the data comes from</a>
+    </p>
 
     <noscript>
       <p class="muted">
-        ShelfLedger keeps your collection in your browser's own database, so it needs JavaScript.
-        There is no server-rendered version because there is no server holding your data.
+        The radar reads a static JSON file and filters it in the page, so it needs JavaScript.
       </p>
     </noscript>

@@ -2,9 +2,9 @@
 {
   "route": "/about/",
   "nav": "about",
-  "title": "How ShelfLedger works, and what it never does",
-  "description": "What ShelfLedger stores, where it stores it, what leaves your browser, and how to contribute to the open catalogue dataset.",
-  "scripts": []
+  "title": "How ShelfLedger works, and where the data comes from",
+  "description": "Which manufacturers the release radar reads, which ones it cannot, what ShelfLedger stores, and what never leaves your browser.",
+  "scripts": ["pages/about.js"]
 }
 @-->
     <div class="page-head">
@@ -13,76 +13,73 @@
 
     <div class="prose">
       <p>
-        ShelfLedger tracks what you own, want, and used to own. There is no account and no server
-        holding your collection, so there is nothing to sign up for and nothing to leak.
+        ShelfLedger is a release radar for action figures, Funko Pops, anime figures and other
+        collectibles. It tracks new announcements, preorders, exclusives and upcoming drops. There is
+        no account, and nothing you enter leaves your browser.
+      </p>
+
+      <h2>Coverage</h2>
+      <p>
+        A daily job reads public listing pages, one request per listing, and writes what it finds to
+        a static file. It identifies itself as <code>ShelfLedgerBot</code>, reads
+        <code>robots.txt</code> first, and never requests individual product pages.
+      </p>
+
+      <div data-coverage>
+        <p class="muted">Loading coverage.</p>
+      </div>
+
+      <p>
+        When a source breaks, its entries are kept from the previous run and the radar says so
+        rather than quietly dropping them. Nothing in the feed is invented: if a manufacturer is not
+        in the first list, ShelfLedger is not tracking it.
       </p>
 
       <h2>Where your data lives</h2>
       <p>
-        In IndexedDB, a database built into your browser, on your device. Nothing else. Clearing
-        site data deletes it permanently, and nobody can restore it for you. That is the trade for
-        nobody being able to read it.
+        Your collection and wishlist go into IndexedDB, a database built into your browser, on your
+        device. Nothing else. No cookies, no accounts, no server copy. Clearing site data deletes it
+        permanently and nobody can restore it for you, which is the trade for nobody being able to
+        read it.
       </p>
 
       <h2>What this app requests</h2>
       <p>Three kinds of file, all from this same domain:</p>
       <ul>
-        <li>the pages, styles, and scripts;</li>
-        <li><code>data/catalog/*.json</code>, the shared item catalogue, fetched when you search;</li>
-        <li><code>data/releases.json</code>, the public release calendar.</li>
+        <li>the pages, styles and scripts;</li>
+        <li><code>data/releases.json</code>, the release feed;</li>
+        <li><code>data/catalog/*.json</code>, the shared item catalogue, fetched when you search.</li>
       </ul>
       <p>
         Identical files for everyone. No query strings, no identifiers, no request bodies. No
         analytics of any kind, no error reporting, no third-party fonts, no embeds, no iframes.
       </p>
 
-      <h2>The release radar</h2>
+      <h2>Wishlist matching</h2>
       <p>
-        This is the one feature where you would expect a server. The release file is public and the
-        same for every visitor. Your browser downloads it and compares it against your wishlist
-        itself, so the flags you see were worked out on your device.
-      </p>
-      <p>
-        A scheduled job reads Funko's public catalogue pages once a day: new releases, coming soon,
-        pre-orders, exclusives, and the limited edition drop calendar. It names itself honestly in
-        its user agent and respects <code>robots.txt</code>. The result is committed to the
-        repository, so you can read the diff. Prices and dates are whatever the source said when it
-        ran.
+        The radar flags releases that line up with your wishlist. The feed is public and the same for
+        every visitor; the comparison runs here in the page, against the list stored on this device.
+        No server learns what you are hunting for.
       </p>
 
       <h2>Backups replace sync</h2>
       <p>
-        Other trackers move your collection between devices by keeping it on their servers.
-        <a href="../backup/">Export</a> writes the whole thing to one JSON file instead. Getting
-        that file to another device is up to you, which is less convenient and a lot more private.
-      </p>
-
-      <h2>The catalogue</h2>
-      <p>
-        Around 19,800 items with official item numbers, seeded from public listings. It is
-        definitely missing things, especially older releases and barcodes. If something you own is
-        not there,
-        <a href="https://github.com/TheAgencyMGE/shelfledger/issues/new?template=missing-item.yml"
-          >open an issue</a
-        >
-        or send a pull request. One item is one line.
-      </p>
-      <p>
-        You never have to wait for that. Anything you type in yourself is a real entry with the same
-        standing as a catalogued one.
+        <a href="../backup/">Export</a> writes your whole collection to one JSON file, and import
+        reads it back. Getting that file to another device is up to you, which is less convenient
+        and a lot more private than an account.
       </p>
 
       <h2>Scanning</h2>
       <p>
-        Scanning uses your browser's own barcode decoder where one exists, and a copy of ZXing
-        served from this domain where it does not. Camera frames are read and discarded in the page.
-        No image and no scanned number is uploaded, and the camera stops when you close the scanner.
+        Scanning uses your browser's own barcode decoder where one exists, and a copy of ZXing served
+        from this domain where it does not. Camera frames are read and discarded in the page. No
+        image and no scanned number is uploaded, and the camera stops when you close the scanner.
       </p>
 
       <h2>Licence</h2>
       <p>
-        MIT. Independent and fan-made, with no connection to Funko, LLC or any other manufacturer,
-        distributor, or retailer. Product names and trademarks belong to their owners and appear
-        here only to describe the things being catalogued.
+        MIT. Independent and fan-made, with no connection to Funko, Mezco, Bandai or any other
+        manufacturer, distributor or retailer. Product names and trademarks belong to their owners
+        and appear here only to describe the things being tracked.
       </p>
     </div>
