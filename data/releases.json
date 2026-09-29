@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-09-29T00:07:58.285Z",
+  "generatedAt": "2026-09-29T23:22:39.019Z",
   "sources": [
     {
       "id": "entertainment-earth",
@@ -37,7 +37,7 @@
       "ok": true,
       "listings": 96,
       "withListingDate": 0,
-      "lastSuccess": "2026-09-29T00:07:58.285Z",
+      "lastSuccess": "2026-09-29T23:22:39.019Z",
       "bootstrap": false
     },
     {
@@ -49,7 +49,7 @@
       "ok": true,
       "listings": 60,
       "withListingDate": 0,
-      "lastSuccess": "2026-09-29T00:07:58.285Z",
+      "lastSuccess": "2026-09-29T23:22:39.019Z",
       "bootstrap": false
     },
     {
@@ -59,9 +59,9 @@
       "homepage": "https://tamashiiweb.com/",
       "url": "https://tamashiiweb.com/",
       "ok": true,
-      "listings": 79,
+      "listings": 82,
       "withListingDate": 0,
-      "lastSuccess": "2026-09-29T00:07:58.285Z",
+      "lastSuccess": "2026-09-29T23:22:39.019Z",
       "bootstrap": false
     }
   ],
@@ -127,7 +127,7 @@
       "coveredVia": "The unfiltered BigBadToyStore listing is read."
     }
   ],
-  "releaseCount": 875,
+  "releaseCount": 878,
   "releases": [
     {
       "id": "mezco-5-points-batman-tas-series-2-batcycle",
@@ -913,7 +913,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "pre-order",
+      "availability": null,
       "price": 42,
       "currency": "USD",
       "limitedRunSize": null,
@@ -931,7 +931,7 @@
           "url": "https://www.mezcotoyz.com/5p-terrifier",
           "price": 42,
           "currency": "USD",
-          "availability": "pre-order",
+          "availability": null,
           "listedDate": null,
           "listingKind": null
         }
@@ -942,7 +942,7 @@
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": true,
       "previousAvailability": "pre-order",
-      "availabilityChangedAt": null,
+      "availabilityChangedAt": "2026-09-29",
       "restockedAt": null
     },
     {
@@ -5554,6 +5554,150 @@
       "restockedAt": null
     },
     {
+      "id": "tamashii-16170",
+      "name": "【抽選販売】＜SIDE MS＞ クィン・マンサ ～マーキングプラス～【2次：2027年4月発送分】",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "ROBOT魂",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-09-29",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": true,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16170/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16170/",
+      "firstSeen": "2026-09-29",
+      "lastSeen": "2026-09-29",
+      "firstSeenByShelfLedger": "2026-09-29",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
+      "id": "tamashii-16171",
+      "name": "【抽選販売】＜SIDE MS＞ 強化型ZZガンダム【3次：2027年6月発送分】",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "METAL ROBOT魂（Ka signature）",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-09-29",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": true,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16171/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16171/",
+      "firstSeen": "2026-09-29",
+      "lastSeen": "2026-09-29",
+      "firstSeenByShelfLedger": "2026-09-29",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
+      "id": "tamashii-16172",
+      "name": "【抽選販売】＜SIDE MS＞ 強化型ZZガンダム用フルアーマーパーツセット【2次：2027年5月発送】",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "METAL ROBOT魂（Ka signature）",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-09-29",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": true,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16172/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16172/",
+      "firstSeen": "2026-09-29",
+      "lastSeen": "2026-09-29",
+      "firstSeenByShelfLedger": "2026-09-29",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "funko-93419",
       "name": "Pop! Godzilla (Glitter) with Pop! Protector",
       "manufacturer": "Funko",
@@ -5597,7 +5741,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -5933,7 +6077,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -6125,7 +6269,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -6241,7 +6385,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "pre-order",
+      "availability": "waitlist",
       "price": 125,
       "currency": "USD",
       "limitedRunSize": null,
@@ -6259,7 +6403,7 @@
           "url": "https://www.mezcotoyz.com/blade",
           "price": 125,
           "currency": "USD",
-          "availability": "pre-order",
+          "availability": "waitlist",
           "listedDate": null,
           "listingKind": null
         }
@@ -6270,7 +6414,7 @@
       "firstSeenByShelfLedger": "2026-09-09",
       "baseline": false,
       "previousAvailability": "pre-order",
-      "availabilityChangedAt": null,
+      "availabilityChangedAt": "2026-09-29",
       "restockedAt": null
     },
     {
@@ -27581,7 +27725,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27869,7 +28013,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -27965,7 +28109,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28013,7 +28157,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28061,7 +28205,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28253,7 +28397,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28541,7 +28685,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28829,7 +28973,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28877,7 +29021,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -29069,7 +29213,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -29549,7 +29693,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -29645,7 +29789,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -30605,7 +30749,7 @@
       "lastSeen": "2026-09-29",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
