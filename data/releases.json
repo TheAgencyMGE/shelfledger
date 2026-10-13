@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-10-13T01:46:18.403Z",
+  "generatedAt": "2026-10-13T23:34:05.970Z",
   "sources": [
     {
       "id": "entertainment-earth",
@@ -37,7 +37,7 @@
       "ok": true,
       "listings": 93,
       "withListingDate": 0,
-      "lastSuccess": "2026-10-13T01:46:18.403Z",
+      "lastSuccess": "2026-10-13T23:34:05.970Z",
       "bootstrap": false
     },
     {
@@ -49,7 +49,7 @@
       "ok": true,
       "listings": 60,
       "withListingDate": 0,
-      "lastSuccess": "2026-10-13T01:46:18.403Z",
+      "lastSuccess": "2026-10-13T23:34:05.970Z",
       "bootstrap": false
     },
     {
@@ -61,7 +61,7 @@
       "ok": true,
       "listings": 90,
       "withListingDate": 0,
-      "lastSuccess": "2026-10-13T01:46:18.403Z",
+      "lastSuccess": "2026-10-13T23:34:05.970Z",
       "bootstrap": false
     }
   ],
@@ -4114,54 +4114,6 @@
       "restockedAt": null
     },
     {
-      "id": "tamashii-16139",
-      "name": "ストライクノワールガンダム (20th MEMORIAL COLOR)",
-      "manufacturer": "Bandai Tamashii Nations",
-      "makerKey": "bandai",
-      "line": "METAL BUILD",
-      "license": null,
-      "category": "anime-figure",
-      "sku": null,
-      "releaseDate": "2026-09-25",
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": null,
-      "price": null,
-      "currency": null,
-      "limitedRunSize": null,
-      "exclusive": "魂ウェブ商店販売商品",
-      "isReissue": false,
-      "onNewReleasesPage": false,
-      "sourceIds": [
-        "tamashii"
-      ],
-      "offers": [
-        {
-          "sourceId": "tamashii",
-          "seller": "Tamashii Nations",
-          "kind": "manufacturer",
-          "url": "https://tamashiiweb.com/item/16139/",
-          "price": null,
-          "currency": null,
-          "availability": null,
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://tamashiiweb.com/item/16139/",
-      "firstSeen": "2026-09-25",
-      "lastSeen": "2026-10-13",
-      "firstSeenByShelfLedger": "2026-09-25",
-      "baseline": false,
-      "previousAvailability": null,
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
       "id": "tamashii-16170",
       "name": "【抽選販売】＜SIDE MS＞ クィン・マンサ ～マーキングプラス～【2次：2027年4月発送分】",
       "manufacturer": "Bandai Tamashii Nations",
@@ -6034,54 +5986,6 @@
       "restockedAt": null
     },
     {
-      "id": "tamashii-16194",
-      "name": "ボルキャンサー＆仮面ライダーシザースオプションパーツセット",
-      "manufacturer": "Bandai Tamashii Nations",
-      "makerKey": "bandai",
-      "line": "S.H.Figuarts（真骨彫製法）",
-      "license": null,
-      "category": "anime-figure",
-      "sku": null,
-      "releaseDate": "2026-10-09",
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": null,
-      "price": null,
-      "currency": null,
-      "limitedRunSize": null,
-      "exclusive": "魂ウェブ商店販売商品",
-      "isReissue": false,
-      "onNewReleasesPage": false,
-      "sourceIds": [
-        "tamashii"
-      ],
-      "offers": [
-        {
-          "sourceId": "tamashii",
-          "seller": "Tamashii Nations",
-          "kind": "manufacturer",
-          "url": "https://tamashiiweb.com/item/16194/",
-          "price": null,
-          "currency": null,
-          "availability": null,
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://tamashiiweb.com/item/16194/",
-      "firstSeen": "2026-10-09",
-      "lastSeen": "2026-10-13",
-      "firstSeenByShelfLedger": "2026-10-09",
-      "baseline": false,
-      "previousAvailability": null,
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
       "id": "tamashii-16193",
       "name": "仮面ライダーシザース",
       "manufacturer": "Bandai Tamashii Nations",
@@ -6466,6 +6370,54 @@
       "restockedAt": null
     },
     {
+      "id": "tamashii-16217",
+      "name": "【抽選販売】ボルキャンサー＆仮面ライダーシザースオプションパーツセット【2次：2027年5月発送分】",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "S.H.Figuarts（真骨彫製法）",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-10-13",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": true,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16217/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16217/",
+      "firstSeen": "2026-10-13",
+      "lastSeen": "2026-10-13",
+      "firstSeenByShelfLedger": "2026-10-13",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "funko-93524",
       "name": "Pop! Skeletor (Translucent) with Pop! Protector",
       "manufacturer": "Funko",
@@ -6514,6 +6466,54 @@
       "restockedAt": "2026-10-09"
     },
     {
+      "id": "tamashii-16204",
+      "name": "エドワード・ニューゲート（白ひげ） -マリンフォード頂上決戦-",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "S.H.Figuarts",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-10-13",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": false,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16204/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16204/",
+      "firstSeen": "2026-10-13",
+      "lastSeen": "2026-10-13",
+      "firstSeenByShelfLedger": "2026-10-13",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "funko-93429",
       "name": "Pop! Stitch in Bath",
       "manufacturer": "Funko",
@@ -6557,7 +6557,7 @@
       "lastSeen": "2026-10-13",
       "firstSeenByShelfLedger": "2026-09-29",
       "baseline": false,
-      "previousAvailability": "out-of-stock",
+      "previousAvailability": "in-stock",
       "availabilityChangedAt": "2026-10-13",
       "restockedAt": "2026-10-13"
     },
@@ -28637,7 +28637,7 @@
       "lastSeen": "2026-10-13",
       "firstSeenByShelfLedger": "2026-10-13",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28657,7 +28657,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "out-of-stock",
+      "availability": "in-stock",
       "price": 49.99,
       "currency": "USD",
       "limitedRunSize": null,
@@ -28675,7 +28675,7 @@
           "url": "https://funko.com/pop-die-cast-doctor-doom-doomsday/94044.html",
           "price": 49.99,
           "currency": "USD",
-          "availability": "out-of-stock",
+          "availability": "in-stock",
           "listedDate": null,
           "listingKind": null
         }
@@ -28685,9 +28685,9 @@
       "lastSeen": "2026-10-13",
       "firstSeenByShelfLedger": "2026-10-13",
       "baseline": false,
-      "previousAvailability": null,
-      "availabilityChangedAt": null,
-      "restockedAt": null
+      "previousAvailability": "out-of-stock",
+      "availabilityChangedAt": "2026-10-13",
+      "restockedAt": "2026-10-13"
     },
     {
       "id": "funko-94068",
@@ -29453,7 +29453,7 @@
       "lastSeen": "2026-10-13",
       "firstSeenByShelfLedger": "2026-10-13",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -29789,7 +29789,7 @@
       "lastSeen": "2026-10-13",
       "firstSeenByShelfLedger": "2026-10-13",
       "baseline": false,
-      "previousAvailability": null,
+      "previousAvailability": "out-of-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -30241,7 +30241,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "in-stock",
+      "availability": "out-of-stock",
       "price": 14.99,
       "currency": "USD",
       "limitedRunSize": null,
@@ -30259,7 +30259,7 @@
           "url": "https://funko.com/pop-sorcerer-supreme-doom/94264.html",
           "price": 14.99,
           "currency": "USD",
-          "availability": "in-stock",
+          "availability": "out-of-stock",
           "listedDate": null,
           "listingKind": null
         }
@@ -30270,7 +30270,7 @@
       "firstSeenByShelfLedger": "2026-10-06",
       "baseline": false,
       "previousAvailability": "in-stock",
-      "availabilityChangedAt": "2026-10-11",
+      "availabilityChangedAt": "2026-10-13",
       "restockedAt": "2026-10-11"
     },
     {
