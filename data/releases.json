@@ -1,6 +1,6 @@
 {
   "schemaVersion": 3,
-  "generatedAt": "2026-11-06T00:41:01.595Z",
+  "generatedAt": "2026-11-06T23:55:02.817Z",
   "sources": [
     {
       "id": "entertainment-earth",
@@ -35,9 +35,9 @@
       "homepage": "https://funko.com/",
       "url": "https://funko.com/new-featured/new-releases/",
       "ok": true,
-      "listings": 87,
+      "listings": 86,
       "withListingDate": 0,
-      "lastSuccess": "2026-11-06T00:41:01.595Z",
+      "lastSuccess": "2026-11-06T23:55:02.817Z",
       "bootstrap": false
     },
     {
@@ -49,7 +49,7 @@
       "ok": true,
       "listings": 60,
       "withListingDate": 0,
-      "lastSuccess": "2026-11-06T00:41:01.595Z",
+      "lastSuccess": "2026-11-06T23:55:02.817Z",
       "bootstrap": false
     },
     {
@@ -59,9 +59,9 @@
       "homepage": "https://tamashiiweb.com/",
       "url": "https://tamashiiweb.com/",
       "ok": true,
-      "listings": 91,
+      "listings": 94,
       "withListingDate": 0,
-      "lastSuccess": "2026-11-06T00:41:01.595Z",
+      "lastSuccess": "2026-11-06T23:55:02.817Z",
       "bootstrap": false
     }
   ],
@@ -127,7 +127,7 @@
       "coveredVia": "The unfiltered BigBadToyStore listing is read."
     }
   ],
-  "releaseCount": 878,
+  "releaseCount": 880,
   "releases": [
     {
       "id": "mezco-5-points-batman-tas-series-2-batcycle",
@@ -913,7 +913,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": null,
+      "availability": "out-of-stock",
       "price": 42,
       "currency": "USD",
       "limitedRunSize": null,
@@ -931,7 +931,7 @@
           "url": "https://www.mezcotoyz.com/5p-terrifier",
           "price": 42,
           "currency": "USD",
-          "availability": null,
+          "availability": "out-of-stock",
           "listedDate": null,
           "listingKind": null
         }
@@ -942,7 +942,7 @@
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": true,
       "previousAvailability": null,
-      "availabilityChangedAt": "2026-09-29",
+      "availabilityChangedAt": "2026-11-06",
       "restockedAt": null
     },
     {
@@ -1777,7 +1777,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "waitlist",
+      "availability": null,
       "price": 66,
       "currency": "USD",
       "limitedRunSize": null,
@@ -1795,7 +1795,7 @@
           "url": "https://www.mezcotoyz.com/5p-batman-1989-s2",
           "price": 66,
           "currency": "USD",
-          "availability": "waitlist",
+          "availability": null,
           "listedDate": null,
           "listingKind": null
         }
@@ -1806,7 +1806,7 @@
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": true,
       "previousAvailability": "waitlist",
-      "availabilityChangedAt": "2026-09-10",
+      "availabilityChangedAt": "2026-11-06",
       "restockedAt": null
     },
     {
@@ -2065,7 +2065,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "in-stock",
+      "availability": "out-of-stock",
       "price": 39.99,
       "currency": "USD",
       "limitedRunSize": 1200,
@@ -2083,7 +2083,7 @@
           "url": "https://funko.com/pop-alice-porcelain-with-pop-protector/93411.html",
           "price": 39.99,
           "currency": "USD",
-          "availability": "in-stock",
+          "availability": "out-of-stock",
           "listedDate": null,
           "listingKind": null
         }
@@ -2094,7 +2094,7 @@
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": true,
       "previousAvailability": "in-stock",
-      "availabilityChangedAt": "2026-10-23",
+      "availabilityChangedAt": "2026-11-06",
       "restockedAt": "2026-10-23"
     },
     {
@@ -6562,6 +6562,150 @@
       "restockedAt": null
     },
     {
+      "id": "tamashii-16264",
+      "name": "【抽選販売】ウルトラマンヒカリ【2次：2027年6月発送分】",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "S.H.Figuarts",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-11-06",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": true,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16264/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16264/",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
+      "id": "tamashii-16265",
+      "name": "【抽選販売】仮面ライダーゴースト ムゲン魂【2次：2027年6月発送分】",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "S.H.Figuarts",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-11-06",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": true,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16265/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16265/",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
+      "id": "tamashii-16253",
+      "name": "仮面ライダーアトラス",
+      "manufacturer": "Bandai Tamashii Nations",
+      "makerKey": "bandai",
+      "line": "S.H.Figuarts（真骨彫製法）",
+      "license": null,
+      "category": "anime-figure",
+      "sku": null,
+      "releaseDate": "2026-11-06",
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": null,
+      "price": null,
+      "currency": null,
+      "limitedRunSize": null,
+      "exclusive": "魂ウェブ商店販売商品",
+      "isReissue": false,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "tamashii"
+      ],
+      "offers": [
+        {
+          "sourceId": "tamashii",
+          "seller": "Tamashii Nations",
+          "kind": "manufacturer",
+          "url": "https://tamashiiweb.com/item/16253/",
+          "price": null,
+          "currency": null,
+          "availability": null,
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://tamashiiweb.com/item/16253/",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "mezco-kingpin",
       "name": "Kingpin",
       "manufacturer": "Mezco Toyz",
@@ -8641,7 +8785,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "out-of-stock",
+      "availability": null,
       "price": 45,
       "currency": "USD",
       "limitedRunSize": null,
@@ -8659,7 +8803,7 @@
           "url": "https://www.mezcotoyz.com/item/18165/5-points-batman-the-animated-series-batmobile/1.html",
           "price": 45,
           "currency": "USD",
-          "availability": "out-of-stock",
+          "availability": null,
           "listedDate": null,
           "listingKind": null
         }
@@ -8670,7 +8814,7 @@
       "firstSeenByShelfLedger": "2026-09-08",
       "baseline": true,
       "previousAvailability": "out-of-stock",
-      "availabilityChangedAt": null,
+      "availabilityChangedAt": "2026-11-06",
       "restockedAt": null
     },
     {
@@ -27682,6 +27826,102 @@
       "restockedAt": null
     },
     {
+      "id": "funko-93247",
+      "name": "Pop! & Buddy Crush with Squirt",
+      "manufacturer": "Funko",
+      "makerKey": "funko",
+      "line": "Pop!",
+      "license": null,
+      "category": "vinyl-figure",
+      "sku": "93247",
+      "releaseDate": null,
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": "in-stock",
+      "price": 14.99,
+      "currency": "USD",
+      "limitedRunSize": null,
+      "exclusive": null,
+      "isReissue": false,
+      "onNewReleasesPage": true,
+      "sourceIds": [
+        "funko"
+      ],
+      "offers": [
+        {
+          "sourceId": "funko",
+          "seller": "Funko Shop",
+          "kind": "manufacturer",
+          "url": "https://funko.com/pop-buddy-crush-with-squirt/93247.html",
+          "price": 14.99,
+          "currency": "USD",
+          "availability": "in-stock",
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://funko.com/pop-buddy-crush-with-squirt/93247.html",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
+      "id": "funko-93248",
+      "name": "Pop! & Buddy Marlin with Nemo",
+      "manufacturer": "Funko",
+      "makerKey": "funko",
+      "line": "Pop!",
+      "license": null,
+      "category": "vinyl-figure",
+      "sku": "93248",
+      "releaseDate": null,
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": "in-stock",
+      "price": 14.99,
+      "currency": "USD",
+      "limitedRunSize": null,
+      "exclusive": null,
+      "isReissue": false,
+      "onNewReleasesPage": true,
+      "sourceIds": [
+        "funko"
+      ],
+      "offers": [
+        {
+          "sourceId": "funko",
+          "seller": "Funko Shop",
+          "kind": "manufacturer",
+          "url": "https://funko.com/pop-buddy-marlin-with-nemo/93248.html",
+          "price": 14.99,
+          "currency": "USD",
+          "availability": "in-stock",
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://funko.com/pop-buddy-marlin-with-nemo/93248.html",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "funko-68727",
       "name": "Pop! & Buddy Scrat with Baby Scrat  (Boiling Point)",
       "manufacturer": "Funko",
@@ -27966,54 +28206,6 @@
       "firstSeenByShelfLedger": "2026-11-05",
       "baseline": false,
       "previousAvailability": "pre-order",
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
-      "id": "funko-93288",
-      "name": "Pop! Annie Leonhart / Female Titan",
-      "manufacturer": "Funko",
-      "makerKey": "funko",
-      "line": "Pop!",
-      "license": null,
-      "category": "vinyl-figure",
-      "sku": "93288",
-      "releaseDate": null,
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": "in-stock",
-      "price": 14.99,
-      "currency": "USD",
-      "limitedRunSize": null,
-      "exclusive": null,
-      "isReissue": false,
-      "onNewReleasesPage": true,
-      "sourceIds": [
-        "funko"
-      ],
-      "offers": [
-        {
-          "sourceId": "funko",
-          "seller": "Funko Shop",
-          "kind": "manufacturer",
-          "url": "https://funko.com/pop-annie-leonhart-%2F-female-titan/93288.html",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "in-stock",
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://funko.com/pop-annie-leonhart-%2F-female-titan/93288.html",
-      "firstSeen": "2026-10-29",
-      "lastSeen": "2026-11-06",
-      "firstSeenByShelfLedger": "2026-10-29",
-      "baseline": false,
-      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -28402,6 +28594,54 @@
       "restockedAt": null
     },
     {
+      "id": "funko-93249",
+      "name": "Pop! Bruce (Fish are Friends)",
+      "manufacturer": "Funko",
+      "makerKey": "funko",
+      "line": "Pop!",
+      "license": null,
+      "category": "vinyl-figure",
+      "sku": "93249",
+      "releaseDate": null,
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": "in-stock",
+      "price": 14.99,
+      "currency": "USD",
+      "limitedRunSize": null,
+      "exclusive": null,
+      "isReissue": false,
+      "onNewReleasesPage": true,
+      "sourceIds": [
+        "funko"
+      ],
+      "offers": [
+        {
+          "sourceId": "funko",
+          "seller": "Funko Shop",
+          "kind": "manufacturer",
+          "url": "https://funko.com/pop-bruce-fish-are-friends/93249.html",
+          "price": 14.99,
+          "currency": "USD",
+          "availability": "in-stock",
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://funko.com/pop-bruce-fish-are-friends/93249.html",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "funko-91978",
       "name": "Pop! Bucky Barnes (Doomsday)",
       "manufacturer": "Funko",
@@ -28444,54 +28684,6 @@
       "firstSeen": "2026-11-05",
       "lastSeen": "2026-11-06",
       "firstSeenByShelfLedger": "2026-11-05",
-      "baseline": false,
-      "previousAvailability": "in-stock",
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
-      "id": "funko-94845",
-      "name": "Pop! Cameron Skattebo",
-      "manufacturer": "Funko",
-      "makerKey": "funko",
-      "line": "Pop!",
-      "license": null,
-      "category": "vinyl-figure",
-      "sku": "94845",
-      "releaseDate": null,
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": "in-stock",
-      "price": 14.99,
-      "currency": "USD",
-      "limitedRunSize": null,
-      "exclusive": "Funko Shop exclusive",
-      "isReissue": false,
-      "onNewReleasesPage": false,
-      "sourceIds": [
-        "funko"
-      ],
-      "offers": [
-        {
-          "sourceId": "funko",
-          "seller": "Funko Shop",
-          "kind": "manufacturer",
-          "url": "https://funko.com/pop-cameron-skattebo/94845.html",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "in-stock",
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://funko.com/pop-cameron-skattebo/94845.html",
-      "firstSeen": "2026-10-16",
-      "lastSeen": "2026-11-06",
-      "firstSeenByShelfLedger": "2026-10-16",
       "baseline": false,
       "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
@@ -28657,7 +28849,7 @@
       "announcedDate": null,
       "announcedBy": null,
       "announcementKind": null,
-      "availability": "out-of-stock",
+      "availability": "in-stock",
       "price": 49.99,
       "currency": "USD",
       "limitedRunSize": null,
@@ -28675,7 +28867,7 @@
           "url": "https://funko.com/pop-die-cast-doctor-doom-doomsday/94044.html",
           "price": 49.99,
           "currency": "USD",
-          "availability": "out-of-stock",
+          "availability": "in-stock",
           "listedDate": null,
           "listingKind": null
         }
@@ -28686,8 +28878,8 @@
       "firstSeenByShelfLedger": "2026-10-17",
       "baseline": false,
       "previousAvailability": "out-of-stock",
-      "availabilityChangedAt": "2026-11-04",
-      "restockedAt": null
+      "availabilityChangedAt": "2026-11-06",
+      "restockedAt": "2026-11-06"
     },
     {
       "id": "funko-94792",
@@ -28834,6 +29026,54 @@
       "restockedAt": "2026-10-19"
     },
     {
+      "id": "funko-93250",
+      "name": "Pop! Dory (Just Keep Swimming)",
+      "manufacturer": "Funko",
+      "makerKey": "funko",
+      "line": "Pop!",
+      "license": null,
+      "category": "vinyl-figure",
+      "sku": "93250",
+      "releaseDate": null,
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": "in-stock",
+      "price": 14.99,
+      "currency": "USD",
+      "limitedRunSize": null,
+      "exclusive": null,
+      "isReissue": false,
+      "onNewReleasesPage": true,
+      "sourceIds": [
+        "funko"
+      ],
+      "offers": [
+        {
+          "sourceId": "funko",
+          "seller": "Funko Shop",
+          "kind": "manufacturer",
+          "url": "https://funko.com/pop-dory-just-keep-swimming/93250.html",
+          "price": 14.99,
+          "currency": "USD",
+          "availability": "in-stock",
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://funko.com/pop-dory-just-keep-swimming/93250.html",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "funko-96754",
       "name": "Pop! Dr. Krieger",
       "manufacturer": "Funko",
@@ -28930,14 +29170,14 @@
       "restockedAt": null
     },
     {
-      "id": "funko-93286",
-      "name": "Pop! Eren Jaeger / Attack Titan",
+      "id": "funko-94828",
+      "name": "Pop! Gill",
       "manufacturer": "Funko",
       "makerKey": "funko",
       "line": "Pop!",
       "license": null,
       "category": "vinyl-figure",
-      "sku": "93286",
+      "sku": "94828",
       "releaseDate": null,
       "releaseWindow": null,
       "preorderDate": null,
@@ -28949,7 +29189,7 @@
       "price": 14.99,
       "currency": "USD",
       "limitedRunSize": null,
-      "exclusive": null,
+      "exclusive": "Funko Shop exclusive",
       "isReissue": false,
       "onNewReleasesPage": true,
       "sourceIds": [
@@ -28960,7 +29200,7 @@
           "sourceId": "funko",
           "seller": "Funko Shop",
           "kind": "manufacturer",
-          "url": "https://funko.com/pop-eren-jaeger-%2F-attack-titan/93286.html",
+          "url": "https://funko.com/pop-gill/94828.html",
           "price": 14.99,
           "currency": "USD",
           "availability": "in-stock",
@@ -28968,12 +29208,12 @@
           "listingKind": null
         }
       ],
-      "url": "https://funko.com/pop-eren-jaeger-%2F-attack-titan/93286.html",
-      "firstSeen": "2026-10-29",
+      "url": "https://funko.com/pop-gill/94828.html",
+      "firstSeen": "2026-11-06",
       "lastSeen": "2026-11-06",
-      "firstSeenByShelfLedger": "2026-10-29",
+      "firstSeenByShelfLedger": "2026-11-06",
       "baseline": false,
-      "previousAvailability": "in-stock",
+      "previousAvailability": null,
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -29209,54 +29449,6 @@
         }
       ],
       "url": "https://funko.com/pop-jonathan-shaw/94862.html",
-      "firstSeen": "2026-10-29",
-      "lastSeen": "2026-11-06",
-      "firstSeenByShelfLedger": "2026-10-29",
-      "baseline": false,
-      "previousAvailability": "in-stock",
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
-      "id": "funko-93557",
-      "name": "Pop! Jude Duarte in Armor",
-      "manufacturer": "Funko",
-      "makerKey": "funko",
-      "line": "Pop!",
-      "license": null,
-      "category": "vinyl-figure",
-      "sku": "93557",
-      "releaseDate": null,
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": "in-stock",
-      "price": 14.99,
-      "currency": "USD",
-      "limitedRunSize": null,
-      "exclusive": null,
-      "isReissue": false,
-      "onNewReleasesPage": true,
-      "sourceIds": [
-        "funko"
-      ],
-      "offers": [
-        {
-          "sourceId": "funko",
-          "seller": "Funko Shop",
-          "kind": "manufacturer",
-          "url": "https://funko.com/pop-jude-duarte-in-armor/93557.html",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "in-stock",
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://funko.com/pop-jude-duarte-in-armor/93557.html",
       "firstSeen": "2026-10-29",
       "lastSeen": "2026-11-06",
       "firstSeenByShelfLedger": "2026-10-29",
@@ -30226,6 +30418,54 @@
       "restockedAt": null
     },
     {
+      "id": "funko-99989",
+      "name": "Pop! Statue of Liberty (New York Knicks 2026 NBA Champions - Ring Night)",
+      "manufacturer": "Funko",
+      "makerKey": "funko",
+      "line": "Pop!",
+      "license": null,
+      "category": "vinyl-figure",
+      "sku": "99989",
+      "releaseDate": null,
+      "releaseWindow": null,
+      "preorderDate": null,
+      "arrivalDate": null,
+      "announcedDate": null,
+      "announcedBy": null,
+      "announcementKind": null,
+      "availability": "in-stock",
+      "price": 14.99,
+      "currency": "USD",
+      "limitedRunSize": null,
+      "exclusive": "Funko Shop exclusive",
+      "isReissue": false,
+      "onNewReleasesPage": false,
+      "sourceIds": [
+        "funko"
+      ],
+      "offers": [
+        {
+          "sourceId": "funko",
+          "seller": "Funko Shop",
+          "kind": "manufacturer",
+          "url": "https://funko.com/pop-statue-of-liberty-new-york-knicks-2026-nba-champions-ring-night/99989.html",
+          "price": 14.99,
+          "currency": "USD",
+          "availability": "in-stock",
+          "listedDate": null,
+          "listingKind": null
+        }
+      ],
+      "url": "https://funko.com/pop-statue-of-liberty-new-york-knicks-2026-nba-champions-ring-night/99989.html",
+      "firstSeen": "2026-11-06",
+      "lastSeen": "2026-11-06",
+      "firstSeenByShelfLedger": "2026-11-06",
+      "baseline": false,
+      "previousAvailability": null,
+      "availabilityChangedAt": null,
+      "restockedAt": null
+    },
+    {
       "id": "funko-96751",
       "name": "Pop! Sterling Archer",
       "manufacturer": "Funko",
@@ -30270,54 +30510,6 @@
       "firstSeenByShelfLedger": "2026-11-05",
       "baseline": false,
       "previousAvailability": "out-of-stock",
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
-      "id": "funko-94762",
-      "name": "Pop! Sung Jinwoo (Blue Aura)",
-      "manufacturer": "Funko",
-      "makerKey": "funko",
-      "line": "Pop!",
-      "license": null,
-      "category": "vinyl-figure",
-      "sku": "94762",
-      "releaseDate": null,
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": "in-stock",
-      "price": 14.99,
-      "currency": "USD",
-      "limitedRunSize": null,
-      "exclusive": "Funko Shop exclusive",
-      "isReissue": false,
-      "onNewReleasesPage": false,
-      "sourceIds": [
-        "funko"
-      ],
-      "offers": [
-        {
-          "sourceId": "funko",
-          "seller": "Funko Shop",
-          "kind": "manufacturer",
-          "url": "https://funko.com/pop-sung-jinwoo-blue-aura/94762.html",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "in-stock",
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://funko.com/pop-sung-jinwoo-blue-aura/94762.html",
-      "firstSeen": "2026-10-16",
-      "lastSeen": "2026-11-06",
-      "firstSeenByShelfLedger": "2026-10-16",
-      "baseline": false,
-      "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
       "restockedAt": null
     },
@@ -30439,7 +30631,7 @@
       "limitedRunSize": null,
       "exclusive": "Funko Shop exclusive",
       "isReissue": false,
-      "onNewReleasesPage": true,
+      "onNewReleasesPage": false,
       "sourceIds": [
         "funko"
       ],
@@ -30658,54 +30850,6 @@
       "restockedAt": null
     },
     {
-      "id": "funko-96862",
-      "name": "Pop! Wolverine (Battle Reborn Suit) (Wolverine)",
-      "manufacturer": "Funko",
-      "makerKey": "funko",
-      "line": "Pop!",
-      "license": null,
-      "category": "vinyl-figure",
-      "sku": "96862",
-      "releaseDate": null,
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": "pre-order",
-      "price": 14.99,
-      "currency": "USD",
-      "limitedRunSize": null,
-      "exclusive": null,
-      "isReissue": false,
-      "onNewReleasesPage": false,
-      "sourceIds": [
-        "funko"
-      ],
-      "offers": [
-        {
-          "sourceId": "funko",
-          "seller": "Funko Shop",
-          "kind": "manufacturer",
-          "url": "https://funko.com/pop-wolverine-battle-reborn-suit-wolverine/96862.html",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "pre-order",
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://funko.com/pop-wolverine-battle-reborn-suit-wolverine/96862.html",
-      "firstSeen": "2026-11-06",
-      "lastSeen": "2026-11-06",
-      "firstSeenByShelfLedger": "2026-11-06",
-      "baseline": false,
-      "previousAvailability": null,
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
       "id": "funko-96866",
       "name": "Pop! Wolverine (Night Hunt Suit) (Wolverine)",
       "manufacturer": "Funko",
@@ -30892,54 +31036,6 @@
       "firstSeen": "2026-10-23",
       "lastSeen": "2026-11-06",
       "firstSeenByShelfLedger": "2026-10-23",
-      "baseline": false,
-      "previousAvailability": "in-stock",
-      "availabilityChangedAt": null,
-      "restockedAt": null
-    },
-    {
-      "id": "funko-93287",
-      "name": "Pop! Zeke Jaeger / Beast Titan",
-      "manufacturer": "Funko",
-      "makerKey": "funko",
-      "line": "Pop!",
-      "license": null,
-      "category": "vinyl-figure",
-      "sku": "93287",
-      "releaseDate": null,
-      "releaseWindow": null,
-      "preorderDate": null,
-      "arrivalDate": null,
-      "announcedDate": null,
-      "announcedBy": null,
-      "announcementKind": null,
-      "availability": "in-stock",
-      "price": 14.99,
-      "currency": "USD",
-      "limitedRunSize": null,
-      "exclusive": null,
-      "isReissue": false,
-      "onNewReleasesPage": true,
-      "sourceIds": [
-        "funko"
-      ],
-      "offers": [
-        {
-          "sourceId": "funko",
-          "seller": "Funko Shop",
-          "kind": "manufacturer",
-          "url": "https://funko.com/pop-zeke-jaeger-%2F-beast-titan/93287.html",
-          "price": 14.99,
-          "currency": "USD",
-          "availability": "in-stock",
-          "listedDate": null,
-          "listingKind": null
-        }
-      ],
-      "url": "https://funko.com/pop-zeke-jaeger-%2F-beast-titan/93287.html",
-      "firstSeen": "2026-10-29",
-      "lastSeen": "2026-11-06",
-      "firstSeenByShelfLedger": "2026-10-29",
       "baseline": false,
       "previousAvailability": "in-stock",
       "availabilityChangedAt": null,
